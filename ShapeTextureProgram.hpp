@@ -42,6 +42,8 @@ struct ShapeTextureProgram
 	static_assert(sizeof(Vertex) == 2 * 4 + 4 * 1 + 2 * 4);
 
 	GLuint GetVao(GLuint vertex_buffer) const;
+	void DrawBox(BoxDrawable& drawable, const glm::vec4& box, const glm::u8vec4 color) const;
+	void DrawFont(FontDrawable& drawable) const;
 };
 
 extern Load < ShapeTextureProgram > shape_texture_program;

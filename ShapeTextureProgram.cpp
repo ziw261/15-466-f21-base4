@@ -33,7 +33,7 @@ static bool GLLogCall(const char* function, const char* file, int line)
 
 Load< ShapeTextureProgram > shape_texture_program(LoadTagEarly);
 
-static uint8_t default_index_buffer_content[]{0, 1, 2, 1, 2, 3};
+static unsigned int default_index_buffer_content[]{0, 1, 2, 1, 2, 3};
 static GLuint default_index_buffer{ 0 };
 static GLuint default_texture{ 0 };
 
@@ -95,6 +95,12 @@ ShapeTextureProgram::ShapeTextureProgram()
 	GLCall(glUseProgram(0));
 }
 
+ShapeTextureProgram::~ShapeTextureProgram()
+{
+	GLCall(glDeleteProgram(program));
+	program = 0;
+}
+
 GLuint ShapeTextureProgram::GetVao(GLuint vertex_buffer) const 
 {
 	GLuint vao;
@@ -114,8 +120,61 @@ GLuint ShapeTextureProgram::GetVao(GLuint vertex_buffer) const
 	return vao;
 }
 
-ShapeTextureProgram::~ShapeTextureProgram()
+void ShapeTextureProgram::BoxDrawable::Clear() 
 {
-	GLCall(glDeleteProgram(program));
-	program = 0;
+	if (vertex_buffer)
+	{
+		GLCall(glDeleteBuffers(1, &vertex_buffer));
+		vertex_buffer = 0;
+	}
+
+	if (vertex_array)
+	{
+		GLCall(glDeleteVertexArrays(1, &vertex_array));
+		vertex_array = 0;
+	}
+}
+
+void ShapeTextureProgram::DrawBox(BoxDrawable& drawable, const glm::vec4& box, const glm::u8vec4 color) const
+{
+	drawable.Clear();
+
+	GLCall(glGenBuffers(1, &drawable.vertex_buffer));
+	GLCall(glBindBuffer(GL_ARRAY_BUFFER, drawable.vertex_buffer));
+	Vertex vertices[]{
+		{{box[0], box[1]}, color, {0, 1}},
+		{{box[2], box[1]}, color, {1, 1}},
+		{{box[0], box[3]}, color, {0, 0}},
+		{{box[2], box[3]}, color, {1, 0}}
+	};
+
+	GLCall(glBufferData(GL_ARRAY_BUFFER, 4 * sizeof(Vertex), static_cast<const void*>(vertices), GL_STATIC_DRAW));
+	drawable.vertex_array = shape_texture_program->GetVao(drawable.vertex_buffer);
+
+	GLCall(glUseProgram(program));
+	GLCall(glBindVertexArray(drawable.vertex_array));
+	GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, default_index_buffer));
+	GLCall(glActiveTexture(GL_TEXTURE0));
+	GLCall(glBindTexture(GL_TEXTURE_2D, default_texture));
+	GLCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, static_cast<const void *>(0)));
+}
+
+void ShapeTextureProgram::FontDrawable::Clear(){
+	if (vertex_buffer)
+	{
+		GLCall(glDeleteBuffers(1, &vertex_buffer));
+		vertex_buffer = 0;
+	}
+
+	if (vertex_array)
+	{
+		GLCall(glDeleteVertexArrays(1, &vertex_array));
+		vertex_array = 0;
+	}
+
+	if (texture_id)
+	{
+		GLCall(glDeleteTextures(1, &texture_id));
+		texture_id = 0;
+	}
 }
