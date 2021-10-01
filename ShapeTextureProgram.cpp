@@ -1,5 +1,5 @@
 #include "ShapeTextureProgram.hpp"
-
+#include <signal.h>
 #include "gl_compile_program.hpp"
 #include "gl_errors.hpp"
 
