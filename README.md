@@ -1,6 +1,7 @@
 # (TODO: your game's title)
 
 Author: Zi Wang, Wenlin Mao, Tianrun Ke
+
 Design: (TODO: In two sentences or fewer, describe what is new and interesting about your game.)
 
 Text Drawing: (TODO: how does the text drawing in this game work? Is text precomputed? Rendered at runtime? What files or utilities are involved?)
