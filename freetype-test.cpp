@@ -13,9 +13,6 @@
 //You probably shouldn't be looking here to learn to use either library.
 
 int main(int argc, char **argv) {
-	FT_Library library;
-	FT_Init_FreeType( &library );
-
 	const char* fontfile;
 	const char* text;
 
