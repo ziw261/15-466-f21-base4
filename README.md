@@ -1,6 +1,6 @@
 # (TODO: your game's title)
 
-Author: Zi Wang, Wenlin Mao, Tianrun Ke
+Author: Zi Wang, Wenlin Mao, Tianrun(Martin) Ke
 
 Design: (TODO: In two sentences or fewer, describe what is new and interesting about your game.)
 
