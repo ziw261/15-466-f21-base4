@@ -4,6 +4,9 @@
 #include "Load.hpp"
 #include "Scene.hpp"
 
+#include <ft2build.h>
+#include FT_FREETYPE_H
+
 struct ShapeTextureProgram
 {
 	ShapeTextureProgram();
@@ -42,10 +45,11 @@ struct ShapeTextureProgram
 	static_assert(sizeof(Vertex) == 2 * 4 + 4 * 1 + 2 * 4);
 
 	GLuint GetVao(GLuint vertex_buffer) const;
+	GLuint GetTextureId(const FT_Bitmap& bitmap) const;
+	void DeleteTextureId(const GLuint texture_id) const;
 	void SetBox(BoxDrawable& drawable, const glm::vec4& box, const glm::u8vec4 color) const;
 	void DrawBox(const BoxDrawable& drawable) const;
-	void SetFont(FontDrawable& drawable);
-	void DrawFont(FontDrawable& drawable) const;
+	void DrawFont(const Vertex* vertices, const GLuint texture_id) const;
 };
 
 extern Load < ShapeTextureProgram > shape_texture_program;

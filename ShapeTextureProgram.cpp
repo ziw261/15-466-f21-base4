@@ -162,7 +162,8 @@ void ShapeTextureProgram::DrawBox(const BoxDrawable& drawable) const
 	GLCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, static_cast<const void *>(0)));
 }
 
-void ShapeTextureProgram::FontDrawable::Clear(){
+void ShapeTextureProgram::FontDrawable::Clear()
+{
 	if (vertex_buffer)
 	{
 		GLCall(glDeleteBuffers(1, &vertex_buffer));
@@ -180,4 +181,57 @@ void ShapeTextureProgram::FontDrawable::Clear(){
 		GLCall(glDeleteTextures(1, &texture_id));
 		texture_id = 0;
 	}
+}
+
+GLuint ShapeTextureProgram::GetTextureId(const FT_Bitmap& bitmap) const
+{
+	GLuint texture_id;
+
+	GLCall(glPixelStorei(GL_UNPACK_ALIGNMENT, 1));
+	GLCall(glGenTextures(1, &texture_id));
+	GLCall(glBindTexture(GL_TEXTURE_2D, texture_id));
+
+	GLCall(glTexImage2D(
+		GL_TEXTURE_2D,
+		0,
+		GL_RGBA,
+		bitmap.width,
+		bitmap.rows,
+		0,
+		GL_RED,
+		GL_UNSIGNED_BYTE,
+		bitmap.buffer
+	));
+
+	GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR));
+	GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR));
+	GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE));
+	GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE));
+
+	return texture_id;
+}
+
+void ShapeTextureProgram::DeleteTextureId(const GLuint texture_id) const 
+{
+	GLCall(glDeleteTextures(1, &texture_id));
+}
+
+void ShapeTextureProgram::DrawFont(const Vertex* vertices, const GLuint texture_id) const
+{
+	GLuint vertex_buffer, vertex_array;
+
+	glGenBuffers(1, &vertex_buffer);
+	glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer);
+	glBufferData(GL_ARRAY_BUFFER, 4 * sizeof(Vertex), static_cast<const void*>(vertices), GL_STATIC_DRAW);
+
+	vertex_array = GetVao(vertex_buffer);
+	glBindVertexArray(vertex_array);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, default_index_buffer);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texture_id);
+
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, static_cast<const void*>(0));
+
+	glDeleteBuffers(1, &vertex_buffer);
+	glDeleteVertexArrays(1, &vertex_array);
 }

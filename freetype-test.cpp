@@ -4,7 +4,7 @@
 
 #include <hb.h>
 #include <hb-ft.h>
-
+#include <iostream>
 
 #define FONT_SIZE 36
 #define MARGIN (FONT_SIZE * .5)
