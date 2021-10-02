@@ -42,7 +42,9 @@ struct ShapeTextureProgram
 	static_assert(sizeof(Vertex) == 2 * 4 + 4 * 1 + 2 * 4);
 
 	GLuint GetVao(GLuint vertex_buffer) const;
-	void DrawBox(BoxDrawable& drawable, const glm::vec4& box, const glm::u8vec4 color) const;
+	void SetBox(BoxDrawable& drawable, const glm::vec4& box, const glm::u8vec4 color) const;
+	void DrawBox(const BoxDrawable& drawable) const;
+	void SetFont(FontDrawable& drawable, );
 	void DrawFont(FontDrawable& drawable) const;
 };
 

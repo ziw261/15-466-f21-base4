@@ -135,7 +135,7 @@ void ShapeTextureProgram::BoxDrawable::Clear()
 	}
 }
 
-void ShapeTextureProgram::DrawBox(BoxDrawable& drawable, const glm::vec4& box, const glm::u8vec4 color) const
+void ShapeTextureProgram::SetBox(BoxDrawable& drawable, const glm::vec4& box, const glm::u8vec4 color) const 
 {
 	drawable.Clear();
 
@@ -150,7 +150,10 @@ void ShapeTextureProgram::DrawBox(BoxDrawable& drawable, const glm::vec4& box, c
 
 	GLCall(glBufferData(GL_ARRAY_BUFFER, 4 * sizeof(Vertex), static_cast<const void*>(vertices), GL_STATIC_DRAW));
 	drawable.vertex_array = shape_texture_program->GetVao(drawable.vertex_buffer);
+}
 
+void ShapeTextureProgram::DrawBox(const BoxDrawable& drawable) const
+{
 	GLCall(glUseProgram(program));
 	GLCall(glBindVertexArray(drawable.vertex_array));
 	GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, default_index_buffer));
