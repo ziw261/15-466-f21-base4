@@ -44,7 +44,7 @@ struct ShapeTextureProgram
 	GLuint GetVao(GLuint vertex_buffer) const;
 	void SetBox(BoxDrawable& drawable, const glm::vec4& box, const glm::u8vec4 color) const;
 	void DrawBox(const BoxDrawable& drawable) const;
-	void SetFont(FontDrawable& drawable, );
+	void SetFont(FontDrawable& drawable);
 	void DrawFont(FontDrawable& drawable) const;
 };
 
