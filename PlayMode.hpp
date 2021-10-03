@@ -25,11 +25,11 @@ struct PlayMode : Mode {
 		bool visible = true;
 		glm::vec2 anchor;
 		glm::vec2 dims;
-		std::string text;
 		glm::u8vec4 font_color;
+		glm::u8vec4 box_color;
+		std::string text;
 		std::shared_ptr<FontSource> source;
 		ShapeTextureProgram::BoxDrawable box;
-		glm::u8vec4 box_color;
 
 		TextBlock() = default;
 		TextBlock(std::string font_name_,
