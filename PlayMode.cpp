@@ -62,6 +62,14 @@ PlayMode::PlayMode() : scene(*hexapod_scene) {
 	//start music loop playing:
 	// (note: position will be over-ridden in update())
 	leg_tip_loop = Sound::loop_3D(*dusty_floor_sample, 1.0f, get_leg_tip_position(), 10.0f);
+
+	block.source = new FontSource(data_path("Ephesis-Regular.ttf"));
+	block.anchor = { -0.8f, -0.4f };
+	block.color = { 0x00, 0x00, 0x00, 0xff };
+	block.text = "Testingg";
+
+	if (block.source == nullptr)
+		throw std::runtime_error("texblock font not found.");
 }
 
 PlayMode::~PlayMode() {
@@ -186,6 +194,8 @@ void PlayMode::update(float elapsed) {
 }
 
 void PlayMode::draw(glm::uvec2 const &drawable_size) {
+
+
 	//update camera aspect ratio for drawable:
 	camera->aspect = float(drawable_size.x) / float(drawable_size.y);
 
@@ -227,6 +237,11 @@ void PlayMode::draw(glm::uvec2 const &drawable_size) {
 			glm::vec3(H, 0.0f, 0.0f), glm::vec3(0.0f, H, 0.0f),
 			glm::u8vec4(0xff, 0xff, 0xff, 0x00));
 	}
+
+	if (block.visible) {
+		block.source->DrawText(drawable_size, block.text, block.anchor, block.color);
+	}
+
 	GL_ERRORS();
 }
 

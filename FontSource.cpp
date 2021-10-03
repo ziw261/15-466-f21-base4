@@ -25,7 +25,7 @@ FontSource::FontSource(const std::string font)
 		abort();
 	}
 
-	if ((ft_error = FT_Err_Unknown_File_Format))
+	if (ft_error == FT_Err_Unknown_File_Format)
 	{
 		std::cerr << "Font file not supported." << std::endl;
 		abort();
@@ -58,22 +58,60 @@ void FontSource::InitializeGlyaphMap()
 	}
 }
 
-void FontSource::DrawText(const std::string& text, glm::vec2 anchor, glm::u8vec4 color) 
+void FontSource::DrawText(const glm::uvec2& drawable_size, const std::string& text, glm::vec2 anchor, glm::u8vec4 color)
 {
 	SetText(text);
 
-	ShapeTextureProgram::Vertex vertexes[]{
-			{{0.0f, 0.0f}, color, {0, 0}},
-			{{0.0f, 0.0f}, color, {1, 0}},
-			{{0.0f, 0.0f}, color, {0, 1}},
-			{{0.0f, 0.0f}, color, {1, 1}} };
+	float x_start = AnchorToScreen(anchor.x, drawable_size.x);
+	float y_start = AnchorToScreen(anchor.y, drawable_size.y);
 
-	shape_texture_program->DrawFont(vertexes, glyph_map[text[0]]);
+	FT_GlyphSlot slot = ft_face->glyph;
+	std::cout << "\n\n-----------------------\n";
+	std::cout << "start: x:" << x_start << "; y: " << y_start << "\n";
+
+	for (size_t i = 0; i < text.length(); i++) {
+		auto x_offset = glyph_pos[i].x_offset / 64.0f;
+		auto y_offset = glyph_pos[i].y_offset / 64.0f;
+		auto x_advance = glyph_pos[i].x_advance / 64.0f;
+		auto y_advance = glyph_pos[i].y_advance / 64.0f;
+
+		FT_Error error = FT_Load_Char(ft_face, text[i], FT_LOAD_RENDER);
+		if (error)
+			continue;
+
+		auto& bitmap = slot->bitmap;
+
+		float char_start_x = x_start + x_offset + slot->bitmap_left;
+		char_start_x = ScreenToAnchor(char_start_x, drawable_size.x);
+		float char_start_y = y_start + y_offset + slot->bitmap_top;
+		char_start_y = ScreenToAnchor(char_start_y, drawable_size.y);
+
+		float char_end_x = char_start_x + bitmap.width * 2.0f / drawable_size.x;
+		float char_end_y = char_start_y + bitmap.rows * 2.0f / drawable_size.y;
+
+		std::cout << "char: x:" << char_start_x << "; y: " << char_start_y << "\n";
+
+		//std::cout << "char width: " << char_end_x - char_start_x << "\n";
+		//std::cout << "char height: " << char_end_y - char_start_y << "\n";
+
+		ShapeTextureProgram::Vertex vertexes[]{
+		{{char_start_x, char_start_y}, color, {0, 0}},
+		{{char_end_x, char_start_y}, color, {1, 0}},
+		{{char_start_x, char_end_y}, color, {0, 1}},
+		{{char_end_x, char_end_y}, color, {1, 1}} };
+
+		shape_texture_program->DrawFont(vertexes, glyph_map[text[i]]);
+
+		x_start += x_advance;
+		y_start += y_advance;
+	}
 }
 
 void FontSource::SetText(const std::string& text) 
 {
 	ClearText();
+
+	displayedText = text;
 
 	hb_font = hb_ft_font_create(ft_face, nullptr);
 	hb_buffer = hb_buffer_create();
@@ -85,6 +123,7 @@ void FontSource::SetText(const std::string& text)
 	hb_shape(hb_font, hb_buffer, nullptr, 0);
 	glyph_info = hb_buffer_get_glyph_infos(hb_buffer, nullptr);
 	glyph_pos = hb_buffer_get_glyph_positions(hb_buffer, nullptr);
+
 }
 
 void FontSource::ClearText() 

@@ -2,6 +2,7 @@
 
 #include "Scene.hpp"
 #include "Sound.hpp"
+#include "FontSource.hpp"
 
 #include <glm/glm.hpp>
 
@@ -18,6 +19,14 @@ struct PlayMode : Mode {
 	virtual void draw(glm::uvec2 const &drawable_size) override;
 
 	//----- game state -----
+	struct TextBlock {
+		bool visible = true;
+		glm::vec2 anchor;
+		std::string text;
+		glm::u8vec4 color;
+		FontSource* source;
+	} block;
+
 
 	//input tracking:
 	struct Button {

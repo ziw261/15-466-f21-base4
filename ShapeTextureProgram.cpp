@@ -162,26 +162,26 @@ void ShapeTextureProgram::DrawBox(const BoxDrawable& drawable) const
 	GLCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, static_cast<const void *>(0)));
 }
 
-void ShapeTextureProgram::FontDrawable::Clear()
-{
-	if (vertex_buffer)
-	{
-		GLCall(glDeleteBuffers(1, &vertex_buffer));
-		vertex_buffer = 0;
-	}
-
-	if (vertex_array)
-	{
-		GLCall(glDeleteVertexArrays(1, &vertex_array));
-		vertex_array = 0;
-	}
-
-	if (texture_id)
-	{
-		GLCall(glDeleteTextures(1, &texture_id));
-		texture_id = 0;
-	}
-}
+//void ShapeTextureProgram::FontDrawable::Clear()
+//{
+//	if (vertex_buffer)
+//	{
+//		GLCall(glDeleteBuffers(1, &vertex_buffer));
+//		vertex_buffer = 0;
+//	}
+//
+//	if (vertex_array)
+//	{
+//		GLCall(glDeleteVertexArrays(1, &vertex_array));
+//		vertex_array = 0;
+//	}
+//
+//	if (texture_id)
+//	{
+//		GLCall(glDeleteTextures(1, &texture_id));
+//		texture_id = 0;
+//	}
+//}
 
 GLuint ShapeTextureProgram::GetTextureId(const FT_Bitmap& bitmap) const
 {
@@ -220,18 +220,18 @@ void ShapeTextureProgram::DrawFont(const Vertex* vertices, const GLuint texture_
 {
 	GLuint vertex_buffer, vertex_array;
 
-	glGenBuffers(1, &vertex_buffer);
-	glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer);
-	glBufferData(GL_ARRAY_BUFFER, 4 * sizeof(Vertex), static_cast<const void*>(vertices), GL_STATIC_DRAW);
+	GLCall(glGenBuffers(1, &vertex_buffer));
+	GLCall(glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer));
+	GLCall(glBufferData(GL_ARRAY_BUFFER, 4 * sizeof(Vertex), static_cast<const void*>(vertices), GL_STATIC_DRAW));
 
 	vertex_array = GetVao(vertex_buffer);
-	glBindVertexArray(vertex_array);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, default_index_buffer);
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, texture_id);
+	GLCall(glBindVertexArray(vertex_array));
+	GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, default_index_buffer));
+	GLCall(glActiveTexture(GL_TEXTURE0));
+	GLCall(glBindTexture(GL_TEXTURE_2D, texture_id));
 
-	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, static_cast<const void*>(0));
+	GLCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, static_cast<const void*>(0)));
 
-	glDeleteBuffers(1, &vertex_buffer);
-	glDeleteVertexArrays(1, &vertex_array);
+	GLCall(glDeleteBuffers(1, &vertex_buffer));
+	GLCall(glDeleteVertexArrays(1, &vertex_array));
 }

@@ -25,13 +25,23 @@ private:
 	hb_glyph_position_t* glyph_pos = nullptr;
 
 	void InitializeGlyaphMap();
-	void SetText(const std::string& text);
 	void ClearText();
 	void ClearTextureMap();
+
+	std::string displayedText;
+
+	inline float AnchorToScreen(float pos, int size) {
+		return (pos + 1) * size / 2.0f;
+	}
+
+	inline float ScreenToAnchor(float pos, int size) {
+		return (2 * pos) / size - 1;
+	}
 
 public:
 	FontSource() = delete;
 	~FontSource();
 	FontSource(const std::string font);
-	void DrawText(const std::string& text, glm::vec2 anchor, glm::u8vec4 color);
+	void SetText(const std::string& text);
+	void DrawText(const glm::uvec2& drawable_size, const std::string& text, glm::vec2 anchor, glm::u8vec4 color);
 };

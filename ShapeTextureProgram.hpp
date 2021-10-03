@@ -33,14 +33,14 @@ struct ShapeTextureProgram
 		void Clear();
 	};
 
-	struct FontDrawable
-	{
-		GLuint vertex_array{ 0 };
-		GLuint vertex_buffer{ 0 };
-		GLuint texture_id{ 0 };
+	//struct FontDrawable
+	//{
+	//	GLuint vertex_array{ 0 };
+	//	GLuint vertex_buffer{ 0 };
+	//	GLuint texture_id{ 0 };
 
-		void Clear();
-	};
+	//	void Clear();
+	//};
 
 	static_assert(sizeof(Vertex) == 2 * 4 + 4 * 1 + 2 * 4);
 
