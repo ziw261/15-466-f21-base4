@@ -62,13 +62,13 @@ PlayMode::PlayMode() : scene(*hexapod_scene) {
 	// (note: position will be over-ridden in update())
 	leg_tip_loop = Sound::loop_3D(*dusty_floor_sample, 1.0f, get_leg_tip_position(), 10.0f);
 
-	block = std::move(TextBlock("Ephesis-Regular.ttf",
+	block = TextBlock("Ephesis-Regular.ttf",
 								64,
 								{ -0.8f, -0.4f },
 								{ 0.3f, 0.1f },
 								{ 0xff, 0xff, 0xff, 0xff },
 								{ 0x66, 0xff, 0x33, 0xff },
-								"Testinggabcdefghijklmnopq")
+								"Testinggabcdefghijklmnopq"
 	);
 }
 
