@@ -66,6 +66,7 @@ void FontSource::DrawText(const glm::uvec2& drawable_size, const std::string& te
 	float y_start = AnchorToScreen(anchor.y, drawable_size.y);
 
 	FT_GlyphSlot slot = ft_face->glyph;
+	auto& bitmap = slot->bitmap;
 	/*std::cout << "\n\n-----------------------\n";
 	std::cout << "start: x:" << x_start << "; y: " << y_start << "\n";*/
 
@@ -75,11 +76,11 @@ void FontSource::DrawText(const glm::uvec2& drawable_size, const std::string& te
 		auto x_advance = glyph_pos[i].x_advance / 64.0f;
 		auto y_advance = glyph_pos[i].y_advance / 64.0f;
 
-		//FT_Error error = FT_Load_Char(ft_face, text[i], FT_LOAD_RENDER);
-		//if (error)
-		//	continue;
+		FT_Error error = FT_Load_Char(ft_face, text[i], FT_LOAD_RENDER);
+		if (error)
+			continue;
 
-		auto& bitmap = slot->bitmap;
+		//auto& bitmap = slot->bitmap;
 
 		float char_start_x = x_start + x_offset + slot->bitmap_left;
 		char_start_x = ScreenToAnchor(char_start_x, drawable_size.x);
@@ -87,7 +88,7 @@ void FontSource::DrawText(const glm::uvec2& drawable_size, const std::string& te
 		char_start_y = ScreenToAnchor(char_start_y, drawable_size.y);
 
 		float char_end_x = char_start_x + bitmap.width * 2.0f / drawable_size.x;
-		float char_end_y = char_start_y + bitmap.rows * 2.0f / drawable_size.y;
+		float char_end_y = char_start_y - bitmap.rows * 2.0f / drawable_size.y;
 
 		//std::cout << "char: x:" << char_start_x << "; y: " << char_start_y << "\n";
 
@@ -100,8 +101,8 @@ void FontSource::DrawText(const glm::uvec2& drawable_size, const std::string& te
 		{{char_start_x, char_end_y}, color, {0, 1}},
 		{{char_end_x, char_end_y}, color, {1, 1}} };
 
-		glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		/*glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);*/
 		shape_texture_program->DrawFont(vertexes, glyph_map[text[i]]);
 
 		x_start += x_advance;
