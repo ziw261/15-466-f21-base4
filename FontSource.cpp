@@ -66,8 +66,8 @@ void FontSource::DrawText(const glm::uvec2& drawable_size, const std::string& te
 	float y_start = AnchorToScreen(anchor.y, drawable_size.y);
 
 	FT_GlyphSlot slot = ft_face->glyph;
-	std::cout << "\n\n-----------------------\n";
-	std::cout << "start: x:" << x_start << "; y: " << y_start << "\n";
+	/*std::cout << "\n\n-----------------------\n";
+	std::cout << "start: x:" << x_start << "; y: " << y_start << "\n";*/
 
 	for (size_t i = 0; i < text.length(); i++) {
 		auto x_offset = glyph_pos[i].x_offset / 64.0f;
@@ -89,7 +89,7 @@ void FontSource::DrawText(const glm::uvec2& drawable_size, const std::string& te
 		float char_end_x = char_start_x + bitmap.width * 2.0f / drawable_size.x;
 		float char_end_y = char_start_y + bitmap.rows * 2.0f / drawable_size.y;
 
-		std::cout << "char: x:" << char_start_x << "; y: " << char_start_y << "\n";
+		//std::cout << "char: x:" << char_start_x << "; y: " << char_start_y << "\n";
 
 		//std::cout << "char width: " << char_end_x - char_start_x << "\n";
 		//std::cout << "char height: " << char_end_y - char_start_y << "\n";
@@ -100,6 +100,8 @@ void FontSource::DrawText(const glm::uvec2& drawable_size, const std::string& te
 		{{char_start_x, char_end_y}, color, {0, 1}},
 		{{char_end_x, char_end_y}, color, {1, 1}} };
 
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		shape_texture_program->DrawFont(vertexes, glyph_map[text[i]]);
 
 		x_start += x_advance;

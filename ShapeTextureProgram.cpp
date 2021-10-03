@@ -40,7 +40,7 @@ static GLuint default_texture{ 0 };
 static Load<void> load_default_index_buffer(LoadTagEarly, []() {
 	GLCall(glGenBuffers(1, &default_index_buffer));
 	GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, default_index_buffer));
-	GLCall(glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6 * sizeof(uint8_t), default_index_buffer_content, GL_STATIC_DRAW));
+	GLCall(glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6 * sizeof(unsigned int), default_index_buffer_content, GL_STATIC_DRAW));
 });
 
 static Load<void> load_default_texture(LoadTagEarly, []() {
@@ -207,6 +207,13 @@ GLuint ShapeTextureProgram::GetTextureId(const FT_Bitmap& bitmap) const
 	GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR));
 	GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE));
 	GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE));
+
+	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_R, GL_ONE);
+	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_G, GL_ONE);
+	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_B, GL_ONE);
+	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_A, GL_RED);
+
+	//glBindTexture(GL_TEXTURE_2D, 0);
 
 	return texture_id;
 }
