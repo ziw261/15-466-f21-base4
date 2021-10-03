@@ -162,27 +162,6 @@ void ShapeTextureProgram::DrawBox(const BoxDrawable& drawable) const
 	GLCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, static_cast<const void *>(0)));
 }
 
-//void ShapeTextureProgram::FontDrawable::Clear()
-//{
-//	if (vertex_buffer)
-//	{
-//		GLCall(glDeleteBuffers(1, &vertex_buffer));
-//		vertex_buffer = 0;
-//	}
-//
-//	if (vertex_array)
-//	{
-//		GLCall(glDeleteVertexArrays(1, &vertex_array));
-//		vertex_array = 0;
-//	}
-//
-//	if (texture_id)
-//	{
-//		GLCall(glDeleteTextures(1, &texture_id));
-//		texture_id = 0;
-//	}
-//}
-
 GLuint ShapeTextureProgram::GetTextureId(const FT_Bitmap& bitmap) const
 {
 	GLuint texture_id;
@@ -208,10 +187,10 @@ GLuint ShapeTextureProgram::GetTextureId(const FT_Bitmap& bitmap) const
 	GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE));
 	GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE));
 
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_R, GL_ONE);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_G, GL_ONE);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_B, GL_ONE);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_A, GL_RED);
+	GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_R, GL_ONE));
+	GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_G, GL_ONE));
+	GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_B, GL_ONE));
+	GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_A, GL_RED));
 
 	return texture_id;
 }
@@ -223,7 +202,7 @@ void ShapeTextureProgram::DeleteTextureId(const GLuint texture_id) const
 
 void ShapeTextureProgram::DrawFont(const Vertex* vertices, const GLuint texture_id) const
 {
-	glUseProgram(program);
+	GLCall(glUseProgram(program));
 
 	GLuint vertex_buffer, vertex_array;
 

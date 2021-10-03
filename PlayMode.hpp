@@ -3,6 +3,7 @@
 #include "Scene.hpp"
 #include "Sound.hpp"
 #include "FontSource.hpp"
+#include "data_path.hpp"
 
 #include <glm/glm.hpp>
 
@@ -19,17 +20,43 @@ struct PlayMode : Mode {
 	virtual void draw(glm::uvec2 const &drawable_size) override;
 
 	//----- game state -----
-	struct TextBlock {
+	struct TextBlock
+	{
 		bool visible = true;
 		glm::vec2 anchor;
 		glm::vec2 dims;
 		std::string text;
-		glm::u8vec4 color;
+		glm::u8vec4 font_color;
 		std::shared_ptr<FontSource> source;
 		ShapeTextureProgram::BoxDrawable box;
 		glm::u8vec4 box_color;
-	} block;
 
+		TextBlock() = default;
+		TextBlock(std::string font_name_,
+			unsigned int size,
+			glm::vec2 anchor_,
+			glm::vec2 dims_,
+			glm::u8vec4 font_color_,
+			glm::u8vec4 box_color_,
+			std::string text_) :
+			anchor(anchor_),
+			dims(dims_),
+			font_color(font_color_),
+			box_color(box_color_),
+			text(text_)
+		{
+			source = std::make_shared<FontSource>(data_path(font_name_), size);
+			assert(source != nullptr);
+			shape_texture_program->SetBox(box, glm::vec4(
+				anchor.x,
+				anchor.y + dims.y,
+				anchor.x + dims.x,
+				anchor.y
+			), box_color);
+		}
+	};
+
+	TextBlock block;
 
 	//input tracking:
 	struct Button {

@@ -1,11 +1,11 @@
 #include "FontSource.hpp"
 #include <iostream>
 
-#define FONT_SIZE 64
 
-
-FontSource::FontSource(const std::string font) 
+FontSource::FontSource(const std::string font, const unsigned int s) 
 {
+	font_size = s;
+
 	FT_Error ft_error;
 	if ((ft_error = FT_Init_FreeType(&ft_library)))
 	{
@@ -19,7 +19,7 @@ FontSource::FontSource(const std::string font)
 		abort();
 	}
 
-	if ((ft_error = FT_Set_Char_Size(ft_face, FONT_SIZE * 64, FONT_SIZE * 64, 0, 0)))
+	if ((ft_error = FT_Set_Char_Size(ft_face, font_size * 64, font_size * 64, 0, 0)))
 	{
 		std::cerr << "FT set size failed." << std::endl;
 		abort();
@@ -80,8 +80,6 @@ void FontSource::DrawText(const glm::uvec2& drawable_size, const std::string& te
 		if (error)
 			continue;
 
-		//auto& bitmap = slot->bitmap;
-
 		float char_start_x = x_start + x_offset + slot->bitmap_left;
 		char_start_x = ScreenToAnchor(char_start_x, drawable_size.x);
 		float char_start_y = y_start + y_offset + slot->bitmap_top;
@@ -113,8 +111,6 @@ void FontSource::DrawText(const glm::uvec2& drawable_size, const std::string& te
 void FontSource::SetText(const std::string& text) 
 {
 	ClearText();
-
-	displayedText = text;
 
 	hb_font = hb_ft_font_create(ft_face, nullptr);
 	hb_buffer = hb_buffer_create();
