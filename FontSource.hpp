@@ -43,5 +43,5 @@ public:
 	~FontSource();
 	FontSource(const std::string font, const unsigned int s);
 	void SetText(const std::string& text);
-	void DrawText(const glm::uvec2& drawable_size, const std::string& text, glm::vec2 anchor, glm::u8vec4 color);
+	void DrawText(const glm::uvec2& drawable_size, const std::string& text, glm::vec2 anchor, glm::vec2 dims, glm::u8vec4 color);
 };

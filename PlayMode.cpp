@@ -62,10 +62,11 @@ PlayMode::PlayMode() : scene(*hexapod_scene) {
 	// (note: position will be over-ridden in update())
 	leg_tip_loop = Sound::loop_3D(*dusty_floor_sample, 1.0f, get_leg_tip_position(), 10.0f);
 
-	block = TextBlock("Ephesis-Regular.ttf",
-								64,
+	block = TextBlock("Pacifico.ttf",
+								32,
 								{ -0.8f, -0.4f },
 								{ 0.3f, 0.1f },
+								{ 0.03f, 0.03f },
 								{ 0xff, 0xff, 0xff, 0xff },
 								{ 0x66, 0xff, 0x33, 0xff },
 								"Testinggabcdefghijklmnopq"
@@ -240,7 +241,7 @@ void PlayMode::draw(glm::uvec2 const &drawable_size) {
 
 	if (block.visible) {
 		shape_texture_program->DrawBox(block.box);
-		block.source->DrawText(drawable_size, block.text, block.anchor, block.font_color);		
+		block.source->DrawText(drawable_size, block.text, block.anchor, block.dims, block.font_color);		
 	}
 
 	GL_ERRORS();

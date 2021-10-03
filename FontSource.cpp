@@ -58,12 +58,18 @@ void FontSource::InitializeGlyaphMap()
 	}
 }
 
-void FontSource::DrawText(const glm::uvec2& drawable_size, const std::string& text, glm::vec2 anchor, glm::u8vec4 color)
+void FontSource::DrawText(const glm::uvec2& drawable_size, const std::string& text, glm::vec2 anchor, glm::vec2 dims, glm::u8vec4 color)
 {
 	SetText(text);
 
+	float x_span = dims.x * drawable_size.x / 2.0f;
+	//std::cout << "\n\nx span: " << x_span << "\n";
+
 	float x_start = AnchorToScreen(anchor.x, drawable_size.x);
 	float y_start = AnchorToScreen(anchor.y, drawable_size.y);
+
+	float x_origin = x_start;
+	float y_origin = y_start;
 
 	FT_GlyphSlot slot = ft_face->glyph;
 	auto& bitmap = slot->bitmap;
@@ -75,6 +81,13 @@ void FontSource::DrawText(const glm::uvec2& drawable_size, const std::string& te
 		auto y_offset = glyph_pos[i].y_offset / 64.0f;
 		auto x_advance = glyph_pos[i].x_advance / 64.0f;
 		auto y_advance = glyph_pos[i].y_advance / 64.0f;
+
+		// Horizontal Text Wrapping
+		if (x_start + x_advance - x_origin > x_span) {
+			x_start = x_origin;
+			y_origin -= font_size;
+			y_start = y_origin;
+		}
 
 		FT_Error error = FT_Load_Char(ft_face, text[i], FT_LOAD_RENDER);
 		if (error)
@@ -105,6 +118,9 @@ void FontSource::DrawText(const glm::uvec2& drawable_size, const std::string& te
 
 		x_start += x_advance;
 		y_start += y_advance;
+
+		//std::cout << "Current span: " << x_start - x_origin << "\n";
+
 	}
 }
 
