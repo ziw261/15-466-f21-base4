@@ -22,9 +22,12 @@ struct PlayMode : Mode {
 	struct TextBlock {
 		bool visible = true;
 		glm::vec2 anchor;
+		glm::vec2 dims;
 		std::string text;
 		glm::u8vec4 color;
-		FontSource* source;
+		std::shared_ptr<FontSource> source;
+		ShapeTextureProgram::BoxDrawable box;
+		glm::u8vec4 box_color;
 	} block;
 
 

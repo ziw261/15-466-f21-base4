@@ -63,13 +63,21 @@ PlayMode::PlayMode() : scene(*hexapod_scene) {
 	// (note: position will be over-ridden in update())
 	leg_tip_loop = Sound::loop_3D(*dusty_floor_sample, 1.0f, get_leg_tip_position(), 10.0f);
 
-	block.source = new FontSource(data_path("Ephesis-Regular.ttf"));
-	block.anchor = { -0.8f, -0.4f };
-	block.color = { 0xff, 0xff, 0xff, 0xff };
-	block.text = "Testingg";
-
+	block.source = std::make_shared<FontSource>(data_path("Ephesis-Regular.ttf"));
 	if (block.source == nullptr)
 		throw std::runtime_error("texblock font not found.");
+	block.anchor = { -0.8f, -0.4f };
+	block.dims = { 0.3f, 0.1f };
+	block.color = { 0xff, 0xff, 0xff, 0xff };
+	block.text = "Testingg";
+	block.box_color = { 0x66, 0xff, 0x33, 0xff };
+	shape_texture_program->SetBox(block.box, glm::vec4(
+		block.anchor.x,		
+		block.anchor.y + block.dims.y,
+		block.anchor.x + block.dims.x,
+		block.anchor.y
+	), block.box_color);
+
 }
 
 PlayMode::~PlayMode() {
@@ -239,7 +247,8 @@ void PlayMode::draw(glm::uvec2 const &drawable_size) {
 	//}
 
 	if (block.visible) {
-		block.source->DrawText(drawable_size, block.text, block.anchor, block.color);
+		shape_texture_program->DrawBox(block.box);
+		block.source->DrawText(drawable_size, block.text, block.anchor, block.color);		
 	}
 
 	GL_ERRORS();

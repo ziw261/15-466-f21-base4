@@ -35,8 +35,8 @@ FontSource::FontSource(const std::string font)
 }
 
 FontSource::~FontSource() {
-	//ClearText();
-	//ClearTextureMap();
+	ClearText();
+	ClearTextureMap();
 }
 
 void FontSource::InitializeGlyaphMap() 
@@ -67,8 +67,8 @@ void FontSource::DrawText(const glm::uvec2& drawable_size, const std::string& te
 
 	FT_GlyphSlot slot = ft_face->glyph;
 	auto& bitmap = slot->bitmap;
-	/*std::cout << "\n\n-----------------------\n";
-	std::cout << "start: x:" << x_start << "; y: " << y_start << "\n";*/
+	//std::cout << "\n\n-----------------------\n";
+	//std::cout << "start: x:" << x_start << "; y: " << y_start << "\n";
 
 	for (size_t i = 0; i < text.length(); i++) {
 		auto x_offset = glyph_pos[i].x_offset / 64.0f;
@@ -99,7 +99,7 @@ void FontSource::DrawText(const glm::uvec2& drawable_size, const std::string& te
 		{{char_start_x, char_start_y}, color, {0, 0}},
 		{{char_end_x, char_start_y}, color, {1, 0}},
 		{{char_start_x, char_end_y}, color, {0, 1}},
-		{{char_end_x, char_end_y}, color, {1, 1}} };
+		{{char_end_x, char_end_y}, color, {1, 1}}};
 
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
