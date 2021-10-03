@@ -225,6 +225,8 @@ void ShapeTextureProgram::DeleteTextureId(const GLuint texture_id) const
 
 void ShapeTextureProgram::DrawFont(const Vertex* vertices, const GLuint texture_id) const
 {
+	glUseProgram(program);
+
 	GLuint vertex_buffer, vertex_array;
 
 	GLCall(glGenBuffers(1, &vertex_buffer));

@@ -35,8 +35,8 @@ FontSource::FontSource(const std::string font)
 }
 
 FontSource::~FontSource() {
-	ClearText();
-	ClearTextureMap();
+	//ClearText();
+	//ClearTextureMap();
 }
 
 void FontSource::InitializeGlyaphMap() 
@@ -75,9 +75,9 @@ void FontSource::DrawText(const glm::uvec2& drawable_size, const std::string& te
 		auto x_advance = glyph_pos[i].x_advance / 64.0f;
 		auto y_advance = glyph_pos[i].y_advance / 64.0f;
 
-		FT_Error error = FT_Load_Char(ft_face, text[i], FT_LOAD_RENDER);
-		if (error)
-			continue;
+		//FT_Error error = FT_Load_Char(ft_face, text[i], FT_LOAD_RENDER);
+		//if (error)
+		//	continue;
 
 		auto& bitmap = slot->bitmap;
 

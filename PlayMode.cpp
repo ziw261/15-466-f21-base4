@@ -65,7 +65,7 @@ PlayMode::PlayMode() : scene(*hexapod_scene) {
 
 	block.source = new FontSource(data_path("Ephesis-Regular.ttf"));
 	block.anchor = { -0.8f, -0.4f };
-	block.color = { 0x00, 0x00, 0x00, 0xff };
+	block.color = { 0xff, 0xff, 0xff, 0xff };
 	block.text = "Testingg";
 
 	if (block.source == nullptr)
@@ -207,9 +207,9 @@ void PlayMode::draw(glm::uvec2 const &drawable_size) {
 	//glUniform3fv(lit_color_texture_program->LIGHT_ENERGY_vec3, 1, glm::value_ptr(glm::vec3(1.0f, 1.0f, 0.95f)));
 	//glUseProgram(0);
 
-	//glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
-	//glClearDepth(1.0f); //1.0 is actually the default value to clear the depth buffer to, but FYI you can change it.
-	//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
+	glClearDepth(1.0f); //1.0 is actually the default value to clear the depth buffer to, but FYI you can change it.
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	//glEnable(GL_DEPTH_TEST);
 	//glDepthFunc(GL_LESS); //this is the default depth comparison function, but FYI you can change it.
