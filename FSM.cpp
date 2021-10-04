@@ -1,9 +1,22 @@
 #include "FSM.hpp"
-#include <glm/gtc/type_ptr.hpp>
+#include "gl_errors.hpp"
 
+#include <glm/gtc/type_ptr.hpp>
+#include <fstream>
 #include <random>
 
-FSM::FSM() {}
+FSM::FSM() {
+    std::string testJson;
+    // Json
+	std::ifstream file("test.json");
+	if (file.is_open()) {
+		file >> testJson;
+	}
+	else {
+		throw std::runtime_error("Unable to open json file");
+		abort();
+	}
+}
 
 FSM::~FSM() {}
 
@@ -13,7 +26,7 @@ FSM::~FSM() {}
  * @param action action 0 - 5
  */
 void FSM::transferState(int action){
-    
+
 }
 
 /**
@@ -22,7 +35,7 @@ void FSM::transferState(int action){
  * @param texts  text boxs will be changed based on state
  */
 void FSM::executeState(std::vector<TextBlock>& texts){
-    
+
 }
 
 /**
@@ -32,7 +45,7 @@ void FSM::executeState(std::vector<TextBlock>& texts){
  * @param texts  text boxs will be changed based on state
  */
 void FSM::init(std::vector<TextBlock>& texts){
-    
+
 }
 
 /**
@@ -42,7 +55,7 @@ void FSM::init(std::vector<TextBlock>& texts){
  * @param texts  text boxs will be changed based on state
  */
 void FSM::clearAndRand(std::vector<TextBlock>& texts){
-    
+
 }
 
 /**
@@ -53,7 +66,7 @@ void FSM::clearAndRand(std::vector<TextBlock>& texts){
  * @param texts  text boxs will be changed based on state
  */
 void FSM::gcDesc(std::vector<TextBlock>& texts){
-    
+
 }
 
 /**
@@ -64,7 +77,7 @@ void FSM::gcDesc(std::vector<TextBlock>& texts){
  * @param texts  text boxs will be changed based on state
  */
 void FSM::afDesc(std::vector<TextBlock>& texts){
-    
+
 }
 
 /**
@@ -75,7 +88,7 @@ void FSM::afDesc(std::vector<TextBlock>& texts){
  * @param texts  text boxs will be changed based on state
  */
 void FSM::cardDesc(std::vector<TextBlock>& texts){
-    
+
 }
 
 /**
@@ -85,7 +98,7 @@ void FSM::cardDesc(std::vector<TextBlock>& texts){
  * @param texts  text boxs will be changed based on state
  */
 void FSM::gcDetail(std::vector<TextBlock>& texts){
-    
+
 }
 
 /**
@@ -95,7 +108,7 @@ void FSM::gcDetail(std::vector<TextBlock>& texts){
  * @param texts  text boxs will be changed based on state
  */
 void FSM::afDetail(std::vector<TextBlock>& texts){
-    
+
 }
 
 /**
@@ -105,7 +118,7 @@ void FSM::afDetail(std::vector<TextBlock>& texts){
  * @param texts  text boxs will be changed based on state
  */
 void FSM::cardDetail(std::vector<TextBlock>& texts){
-    
+
 }
 
 /**
@@ -115,7 +128,7 @@ void FSM::cardDetail(std::vector<TextBlock>& texts){
  * @param texts  text boxs will be changed based on state
  */
 void FSM::emotion(std::vector<TextBlock>& texts){
-    
+
 }
 
 /**
@@ -125,7 +138,7 @@ void FSM::emotion(std::vector<TextBlock>& texts){
  * @param texts  text boxs will be changed based on state
  */
 void FSM::offerPrice(std::vector<TextBlock>& texts){
-    
+
 }
 
 /**
@@ -135,7 +148,7 @@ void FSM::offerPrice(std::vector<TextBlock>& texts){
  * @param texts  text boxs will be changed based on state
  */
 void FSM::secondBid(std::vector<TextBlock>& texts){
-    
+
 }
 
 /**
@@ -145,7 +158,7 @@ void FSM::secondBid(std::vector<TextBlock>& texts){
  * @param texts  text boxs will be changed based on state
  */
 void FSM::deal(std::vector<TextBlock>& texts){
-    
+
 }
 
 /**
@@ -155,7 +168,7 @@ void FSM::deal(std::vector<TextBlock>& texts){
  * @param texts  text boxs will be changed based on state
  */
 void FSM::summary(std::vector<TextBlock>& texts){
-    
+
 }
 
 /**
@@ -165,7 +178,7 @@ void FSM::summary(std::vector<TextBlock>& texts){
  * @param texts  text boxs will be changed based on state
  */
 void FSM::win(std::vector<TextBlock>& texts){
-    
+
 }
 
 /**
@@ -175,5 +188,5 @@ void FSM::win(std::vector<TextBlock>& texts){
  * @param texts  text boxs will be changed based on state
  */
 void FSM::lose(std::vector<TextBlock>& texts){
-    
+
 }

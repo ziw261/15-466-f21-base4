@@ -72,15 +72,7 @@ PlayMode::PlayMode() : scene(*hexapod_scene) {
 								"Testinggabc.\ndefghijklmnopq"
 	);
 
-	// Json
-	std::ifstream file("test.json");
-	if (file.is_open()) {
-		file >> testJson;
-	}
-	else {
-		throw std::runtime_error("Unable to open json file");
-		abort();
-	}
+	fsm = FSM();
 }
 
 PlayMode::~PlayMode() {
@@ -147,7 +139,7 @@ bool PlayMode::handle_event(SDL_Event const &evt, glm::uvec2 const &window_size)
 }
 
 void PlayMode::update(float elapsed) {
-	
+
 	//slowly rotates through [0,1):
 	wobble += elapsed / 10.0f;
 	wobble -= std::floor(wobble);

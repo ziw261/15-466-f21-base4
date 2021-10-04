@@ -22,6 +22,7 @@ struct PlayMode : Mode {
 
 	//----- game state -----
 	TextBlock block;
+	FSM fsm;
 
 	//input tracking:
 	struct Button {
