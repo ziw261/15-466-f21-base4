@@ -14,6 +14,7 @@
 PlayMode::PlayMode() {
 	// Set up textblock vector
 	{
+		// Start Button
 		blocks.emplace_back(TextBlock("Pacifico.ttf",
 							80,
 							{ -0.2f, 0.2f },
@@ -23,6 +24,9 @@ PlayMode::PlayMode() {
 							{ 0xff, 0xff, 0xff, 0x00 },
 							"Start"
 		));
+
+		// Customer Name tag
+
 	}
 
 	fsm = FSM();
@@ -47,12 +51,10 @@ bool PlayMode::handle_event(SDL_Event const &evt, glm::uvec2 const &window_size)
 }
 
 void PlayMode::CheckMouseHover() {
-	for (int i = 0; i < blocks.size(); i++) {
-		TextBlock& block = blocks[i];
+	for (auto& block : blocks) {
 		if (mouse_pos.x > block.anchor.x && mouse_pos.x < block.anchor.x + block.dims.x
 			&& mouse_pos.y > block.anchor.y && mouse_pos.y < block.anchor.y + block.dims.y) {
-			selected_block_idx = i;
-			std::cout << "\n\nBox Highlighted!\n";
+			selected_block_idx = static_cast<int>(&block - &blocks[0]);
 			return;
 		}
 	}
