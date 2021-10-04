@@ -49,6 +49,7 @@ class FSM {
 public:
     int cur_state = 0;
 
+    int item_level = 0;
     int true_price = 0;
     int expect_price = 0;
     int bid_price = 0;

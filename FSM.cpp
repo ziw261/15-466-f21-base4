@@ -60,7 +60,12 @@ void FSM::init(std::vector<TextBlock>& texts){
  * @param texts  text boxs will be changed based on state
  */
 void FSM::clearAndRand(std::vector<TextBlock>& texts){
+	item_level = rand() % 3;
+	int add_on_price = rand() % (item_level * 20 + 10);
+	true_price = (item_level * 2 + 2) * (30 + add_on_price);
 
+	expect_price = (80 + rand() % 40) * true_price / 100;
+	bid_price = (120 + rand() % 40) * expect_price / 100;
 }
 
 /**
