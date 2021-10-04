@@ -1,16 +1,21 @@
 #include "FSM.hpp"
 #include "gl_errors.hpp"
+#include "json.hpp"
 
 #include <glm/gtc/type_ptr.hpp>
 #include <fstream>
 #include <random>
 
+// for convenience
+using json = nlohmann::json;
+
 FSM::FSM() {
-    std::string testJson;
+    json j;
     // Json
 	std::ifstream file("test.json");
 	if (file.is_open()) {
-		file >> testJson;
+		file >> j;
+        std::cout << j["Jerry"]["price"] << std::endl;
 	}
 	else {
 		throw std::runtime_error("Unable to open json file");
