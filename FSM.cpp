@@ -392,8 +392,8 @@ void FSM::win(std::vector<TextBlock>& texts){
     texts[0].text = "Play Again";
     texts[1].text = "Congradulation! You win!";
 
-    text[0].visible = true;
-    text[1].visible = true;
+    texts[0].visible = true;
+    texts[1].visible = true;
 }
 
 /**
@@ -406,8 +406,8 @@ void FSM::lose(std::vector<TextBlock>& texts){
     texts[0].text = "Play Again";
     texts[1].text = "Unfortunately! You lost!";
 
-    text[0].visible = true;
-    text[1].visible = true;
+    texts[0].visible = true;
+    texts[1].visible = true;
 }
 
 /**
