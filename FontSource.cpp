@@ -83,7 +83,7 @@ void FontSource::DrawText(const glm::uvec2& drawable_size, const std::string& te
 		auto y_advance = glyph_pos[i].y_advance / 64.0f;
 
 		// Horizontal Text Wrapping
-		if (x_start + x_advance - x_origin > x_span) {
+		if (x_start + x_advance - x_origin > x_span || text[i] == '\n') {
 			x_start = x_origin;
 			y_origin -= font_size;
 			y_start = y_origin;
