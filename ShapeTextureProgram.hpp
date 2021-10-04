@@ -29,7 +29,8 @@ struct ShapeTextureProgram
 	{
 		GLuint vertex_array{ 0 };
 		GLuint vertex_buffer{ 0 };
-
+		glm::u8vec4 color{ 0xff, 0xff, 0xff, 0xff };
+		
 		void Clear();
 	};
 
@@ -37,6 +38,8 @@ struct ShapeTextureProgram
 
 	GLuint GetVao(GLuint vertex_buffer) const;
 	GLuint GetTextureId(const FT_Bitmap& bitmap) const;
+	void SetBoxHighlight(BoxDrawable& drawable, const glm::vec4& box) const;
+	void ResetBoxHighlight(BoxDrawable& drawable, const glm::vec4& box) const;
 	void DeleteTextureId(const GLuint texture_id) const;
 	void SetBox(BoxDrawable& drawable, const glm::vec4& box, const glm::u8vec4 color) const;
 	void DrawBox(const BoxDrawable& drawable) const;
