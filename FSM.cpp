@@ -68,9 +68,11 @@ FSM::~FSM() {}
  * @param action action -1 - 5
  */
 void FSM::transferState(int action){
+    std::cout << "current state: " << cur_state << std::endl;
+    std::cout << "player action: " << action << std::endl;
     switch(cur_state) {
         case 0: {
-            if (action == -3)
+            if (action == 0)
                 cur_state = DFA[cur_state]["start"];
             else {
                 throw std::runtime_error("invalid operation in state " 
@@ -80,11 +82,11 @@ void FSM::transferState(int action){
             break;
         }
         case 2: case 3: case 4: {
-            if (action == 1)
+            if (action == 2)
                 cur_state = DFA[cur_state]["detail"];
-            else if (action == 2)
-                cur_state = DFA[cur_state]["emotion"];
             else if (action == 3)
+                cur_state = DFA[cur_state]["emotion"];
+            else if (action == 4)
                 cur_state = DFA[cur_state]["offer"];
             else {
                 throw std::runtime_error("invalid operation in state " 
@@ -94,7 +96,7 @@ void FSM::transferState(int action){
             break;
         }
         case 5: case 6: case 7: {
-            if (action == 2) {
+            if (action == 3) {
                 cur_state = DFA[cur_state]["back"];
             }
             else {
@@ -105,7 +107,7 @@ void FSM::transferState(int action){
             break;
         }   
         case 8: {
-            if (action == 2) {
+            if (action == 3) {
                 if (item == 0)
                     cur_state = DFA[cur_state]["gc"];
                 else if (item == 1)
@@ -123,12 +125,14 @@ void FSM::transferState(int action){
         case 9: {
             double price = bid_price;
             if (action == 1)
-                price *= 0.8;
+                price *= 1;
             else if (action == 2)
-                price *= 0.6;
+                price *= 0.8;
             else if (action == 3)
-                price *= 0.4;
+                price *= 0.6;
             else if (action == 4)
+                price *= 0.4;
+            else if (action == 5)
                 price *= 0.2;
             else {
                 throw std::runtime_error("invalid operation in state " 
@@ -143,9 +147,9 @@ void FSM::transferState(int action){
             break;
         }
         case 10: {
-            if (action == 1)
+            if (action == 2)
                 cur_state = DFA[cur_state]["accept"];
-            else if (action == 2)
+            else if (action == 3)
                 cur_state = DFA[cur_state]["reject"];
             else {
                 throw std::runtime_error("invalid operation in state " 
@@ -155,7 +159,7 @@ void FSM::transferState(int action){
             break;
         }
         case 11: {
-            if (action == -3)
+            if (action == 0)
                 cur_state = DFA[cur_state]["next"];
             else {
                 throw std::runtime_error("invalid operation in state " 
@@ -165,7 +169,7 @@ void FSM::transferState(int action){
             break;
         }
         case 13: case 14: {
-            if (action == -3)
+            if (action == 0)
                 cur_state = DFA[cur_state]["resume"];
             else {
                 throw std::runtime_error("invalid operation in state " 
@@ -188,6 +192,7 @@ void FSM::transferState(int action){
  * @param texts  text boxs will be changed based on state
  */
 void FSM::executeState(std::vector<TextBlock>& texts){
+    hideTextblocks(texts);
     switch(cur_state) {
         case 0: {
             this->init(texts);
@@ -250,7 +255,7 @@ void FSM::executeState(std::vector<TextBlock>& texts){
             break;
         }
         default : {
-            throw std::runtime_error("unhandled state: " 
+            throw std::runtime_error("unhandled execution state: " 
                                             + std::to_string(cur_state));
 		    abort();
         }
@@ -265,6 +270,7 @@ void FSM::executeState(std::vector<TextBlock>& texts){
  */
 void FSM::init(std::vector<TextBlock>& texts){
     texts[0].text = "Start";
+    texts[0].visible = true;
 }
 
 /**
@@ -300,6 +306,7 @@ void FSM::clearAndRand(std::vector<TextBlock>& texts){
         cur_state = DFA[cur_state]["af"];
     else if (item == 2)
         cur_state = DFA[cur_state]["card"];
+    executeState(texts);
 }
 
 /**
@@ -325,7 +332,7 @@ void FSM::gcDesc(std::vector<TextBlock>& texts){
     texts[3].text = "Current Profit: " + 
         std::to_string(total_gain) + " / " + std::to_string(target_gain);
 
-    texts[9].text = "Current Customer: " + std::to_string(++current_customer);
+    texts[9].text = "Current Customer: " + std::to_string(current_customer);
 
     // use the middle three text blocks
     // show action
@@ -440,6 +447,9 @@ void FSM::gcDetail(std::vector<TextBlock>& texts){
 
     texts[1].visible = true;
     texts[6].visible = true;
+
+    texts[3].visible = true;
+    texts[9].visible = true;
 }
 
 /**
@@ -462,6 +472,9 @@ void FSM::afDetail(std::vector<TextBlock>& texts){
 
     texts[1].visible = true;
     texts[6].visible = true;
+
+    texts[3].visible = true;
+    texts[9].visible = true;
 }
 
 /**
@@ -484,6 +497,9 @@ void FSM::cardDetail(std::vector<TextBlock>& texts){
 
     texts[1].visible = true;
     texts[6].visible = true;
+
+    texts[3].visible = true;
+    texts[9].visible = true;
 }
 
 /**
@@ -496,18 +512,26 @@ void FSM::emotionText(std::vector<TextBlock>& texts){
     int priceDiff = bid_price - expect_price;
     int maxDiff = true_price * (120 / 100) * (160 / 100) 
                     - true_price * (80 / 100);
-
+    
     std::string descText = "";
-    if (priceDiff > maxDiff / 2) 
-        descText = card["emotion"]["high"][rand() % card["emotion"]["high"].size()];
-    else 
-        descText = card["emotion"]["low"][rand() % card["emotion"]["low"].size()];
+    if (priceDiff > maxDiff / 2) {
+        int idx = rand() % emotion["emotion"]["high"].size();
+        descText = emotion["emotion"]["high"][idx];
+    }
+    else {
+        int idx = rand() % emotion["emotion"]["low"].size();
+        descText = emotion["emotion"]["low"][idx];
+    }
+
     texts[1].text = descText;
     
     texts[6].text = "Back";
 
     texts[1].visible = true;
     texts[6].visible = true;
+
+    texts[3].visible = true;
+    texts[9].visible = true;
 }
 
 /**
@@ -530,6 +554,9 @@ void FSM::offerPrice(std::vector<TextBlock>& texts){
     texts[6].visible = true;
     texts[7].visible = true;
     texts[8].visible = true;
+
+    texts[3].visible = true;
+    texts[9].visible = true;
 }
 
 /**
@@ -549,6 +576,9 @@ void FSM::secondBid(std::vector<TextBlock>& texts){
     texts[1].visible = true;
     texts[5].visible = true;
     texts[6].visible = true;
+
+    texts[3].visible = true;
+    texts[9].visible = true;
 }
 
 /**
@@ -567,6 +597,9 @@ void FSM::deal(std::vector<TextBlock>& texts){
 
     texts[0].visible = true;
     texts[1].visible = true;
+
+    texts[3].visible = true;
+    texts[9].visible = true;
 }
 
 /**
@@ -580,6 +613,7 @@ void FSM::summary(std::vector<TextBlock>& texts){
 
     int gain = offer_price - true_price;
     total_gain += gain;
+    current_customer++;
     
     if (gain > 0)
         texts[1].text += "you received $" + std::to_string(gain);
@@ -589,6 +623,8 @@ void FSM::summary(std::vector<TextBlock>& texts){
         texts[1].text += "you neither lose nor gain.";
 
     texts[1].visible = true;
+    texts[3].visible = true;
+    texts[9].visible = true;
 
     if (total_gain >= target_gain)
         cur_state = DFA[cur_state]["win"];
@@ -596,6 +632,7 @@ void FSM::summary(std::vector<TextBlock>& texts){
         cur_state = DFA[cur_state]["lose"];
     else
         cur_state = DFA[cur_state]["next"];
+    executeState(texts);
 }
 
 /**
@@ -610,6 +647,8 @@ void FSM::win(std::vector<TextBlock>& texts){
 
     texts[0].visible = true;
     texts[1].visible = true;
+    texts[3].visible = true;
+    texts[9].visible = true;
 }
 
 /**
@@ -624,6 +663,8 @@ void FSM::lose(std::vector<TextBlock>& texts){
 
     texts[0].visible = true;
     texts[1].visible = true;
+    texts[3].visible = true;
+    texts[9].visible = true;
 }
 
 /**
@@ -631,7 +672,7 @@ void FSM::lose(std::vector<TextBlock>& texts){
 *
 * @param texts  text boxs will be changed based on state
 */
-void FSM::HideTextblocks(std::vector<TextBlock>& texts) {
+void FSM::hideTextblocks(std::vector<TextBlock>& texts) {
     for (auto& block : texts) {
         block.visible = false;
     }

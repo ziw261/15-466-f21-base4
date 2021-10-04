@@ -79,8 +79,8 @@ public:
     int max_price = 1000;
 
     int total_gain = 0;
-    int target_gain = 10000;
-    int total_customer = 10;
+    int target_gain = 1000;
+    int total_customer = 2;
     int current_customer = 0;
 
     json gameConsole;
@@ -101,7 +101,7 @@ public:
         {{"back", 4}},                                  // state 7: card detail
         {{"gc", 2}, {"af", 3}, {"card", 4}},            // state 8: view emotion
         {{"over", 11}, {"below", 10}},                  // state 9: offer price
-        {{"accept", 10}, {"reject", 12}},               // state 10: NPC second Bid
+        {{"accept", 11}, {"reject", 12}},               // state 10: NPC second Bid
         {{"next", 12}},                                 // state 11: Deal
         {{"next", 1}, {"win", 13}, {"lose", 14}},       // state 12: Summary
         {{"resume", 0}},                                // state 13: Win
@@ -256,5 +256,5 @@ public:
      * 
      * @param texts  text boxs will be changed based on state
     */
-    void HideTextblocks(std::vector<TextBlock>& texts);
+    void hideTextblocks(std::vector<TextBlock>& texts);
 };

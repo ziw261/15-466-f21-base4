@@ -187,7 +187,7 @@ void PlayMode::CheckMouseHover() {
 }
 
 void PlayMode::update(float elapsed) {
-
+	
 }
 
 void PlayMode::draw(glm::uvec2 const &drawable_size) {
