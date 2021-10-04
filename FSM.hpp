@@ -245,4 +245,12 @@ public:
      * @param texts  text boxs will be changed based on state
      */
     void lose(std::vector<TextBlock>& texts);
+
+
+    /**
+     * Hide all textblocks
+     * 
+     * @param texts  text boxs will be changed based on state
+    */
+    void HideTextblocks(std::vector<TextBlock>& texts);
 };

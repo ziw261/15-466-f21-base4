@@ -125,6 +125,13 @@ void FSM::gcDesc(std::vector<TextBlock>& texts){
     texts[5].text = "View Item Detail";
     texts[6].text = "View Customer Emotion";
     texts[7].text = "Offer Price";
+
+    texts[1].visible = true;
+    texts[3].visible = true;
+    texts[5].visible = true;
+    texts[6].visible = true;
+    texts[7].visible = true;
+    texts[9].visible = true;
 }
 
 /**
@@ -157,6 +164,13 @@ void FSM::afDesc(std::vector<TextBlock>& texts){
     texts[5].text = "View Item Detail";
     texts[6].text = "View Customer Emotion";
     texts[7].text = "Offer Price";
+
+    texts[1].visible = true;
+    texts[3].visible = true;
+    texts[5].visible = true;
+    texts[6].visible = true;
+    texts[7].visible = true;
+    texts[9].visible = true;
 }
 
 /**
@@ -189,6 +203,14 @@ void FSM::cardDesc(std::vector<TextBlock>& texts){
     texts[5].text = "View Item Detail";
     texts[6].text = "View Customer Emotion";
     texts[7].text = "Offer Price";
+
+
+    texts[1].visible = true;
+    texts[3].visible = true;
+    texts[5].visible = true;
+    texts[6].visible = true;
+    texts[7].visible = true;
+    texts[9].visible = true;
 }
 
 /**
@@ -208,6 +230,9 @@ void FSM::gcDetail(std::vector<TextBlock>& texts){
     texts[1].text = descText;
     
     texts[6].text = "Back";
+
+    texts[1].visible = true;
+    texts[6].visible = true;
 }
 
 /**
@@ -227,6 +252,9 @@ void FSM::afDetail(std::vector<TextBlock>& texts){
     texts[1].text = descText;
     
     texts[6].text = "Back";
+
+    texts[1].visible = true;
+    texts[6].visible = true;
 }
 
 /**
@@ -246,6 +274,9 @@ void FSM::cardDetail(std::vector<TextBlock>& texts){
     texts[1].text = descText;
     
     texts[6].text = "Back";
+
+    texts[1].visible = true;
+    texts[6].visible = true;
 }
 
 /**
@@ -267,6 +298,9 @@ void FSM::emotionText(std::vector<TextBlock>& texts){
     texts[1].text = descText;
     
     texts[6].text = "Back";
+
+    texts[1].visible = true;
+    texts[6].visible = true;
 }
 
 /**
@@ -282,6 +316,13 @@ void FSM::offerPrice(std::vector<TextBlock>& texts){
     texts[6].text = "$" + std::to_string(bid_price * 0.6);
     texts[7].text = "$" + std::to_string(bid_price * 0.4);
     texts[8].text = "$" + std::to_string(bid_price * 0.2);
+
+    texts[1].visible = true;
+    texts[4].visible = true;
+    texts[5].visible = true;
+    texts[6].visible = true;
+    texts[7].visible = true;
+    texts[8].visible = true;
 }
 
 /**
@@ -297,6 +338,10 @@ void FSM::secondBid(std::vector<TextBlock>& texts){
 
     texts[5].text = "Accept";
     texts[6].text = "Reject";
+
+    texts[1].visible = true;
+    texts[5].visible = true;
+    texts[6].visible = true;
 }
 
 /**
@@ -306,11 +351,13 @@ void FSM::secondBid(std::vector<TextBlock>& texts){
  * @param texts  text boxs will be changed based on state
  */
 void FSM::deal(std::vector<TextBlock>& texts){
-    texts[1].text = "The deal has been made! Congras on getting a new ";
+    texts[1].text = "The deal has been made! Congrats on getting a new ";
 
     if (item == 0) texts[1].text += "game console.";
     if (item == 1) texts[1].text += "action figure.";
     if (item == 2) texts[1].text += "card.";
+
+    texts[1].visible = true;
 }
 
 /**
@@ -331,6 +378,8 @@ void FSM::summary(std::vector<TextBlock>& texts){
         texts[1].text += "you lost $" + std::to_string(gain);
     else
         texts[1].text += "you neither lose nor gain.";
+
+    texts[1].visible = true;
 }
 
 /**
@@ -342,6 +391,9 @@ void FSM::summary(std::vector<TextBlock>& texts){
 void FSM::win(std::vector<TextBlock>& texts){
     texts[0].text = "Play Again";
     texts[1].text = "Congradulation! You win!";
+
+    text[0].visible = true;
+    text[1].visible = true;
 }
 
 /**
@@ -353,4 +405,18 @@ void FSM::win(std::vector<TextBlock>& texts){
 void FSM::lose(std::vector<TextBlock>& texts){
     texts[0].text = "Play Again";
     texts[1].text = "Unfortunately! You lost!";
+
+    text[0].visible = true;
+    text[1].visible = true;
+}
+
+/**
+* Hide all textblocks
+*
+* @param texts  text boxs will be changed based on state
+*/
+void FSM::HideTextblocks(std::vector<TextBlock>& texts) {
+    for (auto& block : texts) {
+        block.visible = false;
+    }
 }

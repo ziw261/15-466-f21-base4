@@ -162,6 +162,7 @@ bool PlayMode::handle_event(SDL_Event const &evt, glm::uvec2 const &window_size)
 	}
 	else if (evt.type == SDL_MOUSEBUTTONUP) {
 		if (evt.button.button == SDL_BUTTON_LEFT && selected_block_idx > -1) {
+			int action = selected_block_idx > 0 ? selected_block_idx : selected_block_idx - 3;
 			fsm.transferState(selected_block_idx);
 		}
 	}
