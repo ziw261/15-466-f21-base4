@@ -49,6 +49,9 @@ class FSM {
 public:
     int cur_state = 0;
 
+    // 0 : poor condition
+    // 1 : used condition
+    // 2 : perfect condition
     int item_level = 0;
     int true_price = 0;
     int expect_price = 0;
