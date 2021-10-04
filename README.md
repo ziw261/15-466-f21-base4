@@ -16,5 +16,7 @@ How To Play:
 
 Sources: (TODO: list a source URL for any assets you did not create yourself. Make sure you have a license for the asset.)
 
+Json loading: Stackoverflow: https://stackoverflow.com/a/39975809 and nlohmann's JSON Repository on GitHub: https://github.com/nlohmann/json
+
 This game was built with [NEST](NEST.md).
 
