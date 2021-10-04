@@ -16,17 +16,19 @@ PlayMode::PlayMode() {
 	{
 		// Start Button
 		blocks.emplace_back(TextBlock("Pacifico.ttf",
+							true, true,
 							80,
 							{ -0.2f, 0.4f },
 							{ 0.4f, 0.2f },
 							{ 0.03f, 0.03f },
 							{ 0x00, 0x00, 0x00, 0xff },
-							{ 0xff, 0xff, 0xff, 0xff },
+							{ 0xff, 0xff, 0xff, 0x00 },
 							"Start"
 		));
 
 		// Customer Description
 		blocks.emplace_back(TextBlock("Pacifico.ttf",
+			true, false,
 			24,
 			{ -0.77f, -0.36f },
 			{ 1.54f, 0.5f },
@@ -38,6 +40,7 @@ PlayMode::PlayMode() {
 
 		// Customer Name tag
 		blocks.emplace_back(TextBlock("Pacifico.ttf",
+			true, false,
 			28,
 			{ -0.75f, -0.2f },
 			{ 0.13f, 0.09f },
@@ -49,6 +52,7 @@ PlayMode::PlayMode() {
 
 		// Total Profit
 		blocks.emplace_back(TextBlock("Pacifico.ttf",
+			true, false,
 			18,
 			{ -0.95f, 0.93f },
 			{ 0.4f, 0.08f },
@@ -60,6 +64,7 @@ PlayMode::PlayMode() {
 
 		// Choice Option 0
 		blocks.emplace_back(TextBlock("Pacifico.ttf",
+			true, true,
 			28,
 			{ 0.5f, 0.7f },
 			{ 0.3f, 0.1f },
@@ -71,6 +76,7 @@ PlayMode::PlayMode() {
 
 		// Choice Option 1
 		blocks.emplace_back(TextBlock("Pacifico.ttf",
+			true, true,
 			28,
 			{ 0.5f, 0.5f },
 			{ 0.3f, 0.1f },
@@ -82,6 +88,7 @@ PlayMode::PlayMode() {
 
 		// Choice Option 2
 		blocks.emplace_back(TextBlock("Pacifico.ttf",
+			true, true,
 			28,
 			{ 0.5f, 0.3f },
 			{ 0.3f, 0.1f },
@@ -93,6 +100,7 @@ PlayMode::PlayMode() {
 
 		// Choice Option 3
 		blocks.emplace_back(TextBlock("Pacifico.ttf",
+			true, true,
 			28,
 			{ 0.5f, 0.1f },
 			{ 0.3f, 0.1f },
@@ -104,6 +112,7 @@ PlayMode::PlayMode() {
 
 		// Choice Option 4
 		blocks.emplace_back(TextBlock("Pacifico.ttf",
+			true, true,
 			28,
 			{ 0.5f, -0.1f },
 			{ 0.3f, 0.1f },
@@ -115,6 +124,7 @@ PlayMode::PlayMode() {
 
 		// Num Customer Left
 		blocks.emplace_back(TextBlock("Pacifico.ttf",
+			true, false,
 			18,
 			{ 0.75f, 0.93f },
 			{ 0.2f, 0.08f },
@@ -122,7 +132,14 @@ PlayMode::PlayMode() {
 			{ 0x00, 0x00, 0x00, 0xff },
 			{ 0xe0, 0xe0, 0xe0, 0xff },
 			"Customer Left: 3"
-		));
+		));	
+	}
+
+	// Only show start button at launch
+	{
+		for (size_t i = 1; i < blocks.size(); i++) {
+			blocks[i].visible = false;
+		}
 	}
 
 	fsm = FSM();
@@ -143,12 +160,20 @@ bool PlayMode::handle_event(SDL_Event const &evt, glm::uvec2 const &window_size)
 		CheckMouseHover();
 		return true;
 	}
+	else if (evt.type == SDL_MOUSEBUTTONUP) {
+		if (evt.button.button == SDL_BUTTON_LEFT && selected_block_idx > -1) {
+			fsm.transferState(selected_block_idx);
+		}
+	}
 
 	return false;
 }
 
 void PlayMode::CheckMouseHover() {
 	for (auto& block : blocks) {
+		if (!block.visible || !block.interactable)
+			continue;
+
 		if (mouse_pos.x > block.anchor.x && mouse_pos.x < block.anchor.x + block.dims.x
 			&& mouse_pos.y < block.anchor.y && mouse_pos.y > block.anchor.y - block.dims.y) {
 			selected_block_idx = static_cast<int>(&block - &blocks[0]);

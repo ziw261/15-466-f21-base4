@@ -12,6 +12,7 @@ using json = nlohmann::json;
 struct TextBlock
 {
     bool visible = true;
+    bool interactable = true;
     glm::vec2 anchor;
     glm::vec2 dims;
     glm::vec2 margins;
@@ -23,6 +24,8 @@ struct TextBlock
 
     TextBlock() = default;
     TextBlock(std::string font_name_,
+        bool visible_,
+        bool interactable_,
         unsigned int size,
         glm::vec2 anchor_,
         glm::vec2 dims_,
@@ -30,6 +33,8 @@ struct TextBlock
         glm::u8vec4 font_color_,
         glm::u8vec4 box_color_,
         std::string text_) :
+        visible(visible_),
+        interactable(interactable_),
         anchor(anchor_),
         dims(dims_),
         margins(margins_),
