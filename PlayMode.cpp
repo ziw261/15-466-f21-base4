@@ -17,16 +17,112 @@ PlayMode::PlayMode() {
 		// Start Button
 		blocks.emplace_back(TextBlock("Pacifico.ttf",
 							80,
-							{ -0.2f, 0.2f },
+							{ -0.2f, 0.4f },
 							{ 0.4f, 0.2f },
 							{ 0.03f, 0.03f },
 							{ 0x00, 0x00, 0x00, 0xff },
-							{ 0xff, 0xff, 0xff, 0x00 },
+							{ 0xff, 0xff, 0xff, 0xff },
 							"Start"
 		));
 
-		// Customer Name tag
+		// Customer Description
+		blocks.emplace_back(TextBlock("Pacifico.ttf",
+			24,
+			{ -0.77f, -0.36f },
+			{ 1.54f, 0.5f },
+			{ 0.06f, 0.05f },
+			{ 0x00, 0x00, 0x00, 0xff },
+			{ 0xe0, 0xe0, 0xe0, 0xff },
+			"This is just a sample of what a customer description is going to be like for real blah\nnothing special"
+		));
 
+		// Customer Name tag
+		blocks.emplace_back(TextBlock("Pacifico.ttf",
+			28,
+			{ -0.75f, -0.2f },
+			{ 0.13f, 0.09f },
+			{ 0.02f, 0.02f },
+			{ 0x00, 0x00, 0x00, 0xff },
+			{ 0xe0, 0xe0, 0xe0, 0xff },
+			"Jerry"
+		));
+
+		// Total Profit
+		blocks.emplace_back(TextBlock("Pacifico.ttf",
+			18,
+			{ -0.95f, 0.93f },
+			{ 0.4f, 0.08f },
+			{ 0.02f, 0.02f },
+			{ 0x00, 0x00, 0x00, 0xff },
+			{ 0xe0, 0xe0, 0xe0, 0xff },
+			"Current Profit : $200 / $1000"
+		));
+
+		// Choice Option 0
+		blocks.emplace_back(TextBlock("Pacifico.ttf",
+			28,
+			{ 0.5f, 0.7f },
+			{ 0.3f, 0.1f },
+			{ 0.02f, 0.02f },
+			{ 0x00, 0x00, 0x00, 0xff },
+			{ 0xe0, 0xe0, 0xe0, 0xff },
+			"$150"
+		));
+
+		// Choice Option 1
+		blocks.emplace_back(TextBlock("Pacifico.ttf",
+			28,
+			{ 0.5f, 0.5f },
+			{ 0.3f, 0.1f },
+			{ 0.02f, 0.02f },
+			{ 0x00, 0x00, 0x00, 0xff },
+			{ 0xe0, 0xe0, 0xe0, 0xff },
+			"$150"
+		));
+
+		// Choice Option 2
+		blocks.emplace_back(TextBlock("Pacifico.ttf",
+			28,
+			{ 0.5f, 0.3f },
+			{ 0.3f, 0.1f },
+			{ 0.02f, 0.02f },
+			{ 0x00, 0x00, 0x00, 0xff },
+			{ 0xe0, 0xe0, 0xe0, 0xff },
+			"$150"
+		));
+
+		// Choice Option 3
+		blocks.emplace_back(TextBlock("Pacifico.ttf",
+			28,
+			{ 0.5f, 0.1f },
+			{ 0.3f, 0.1f },
+			{ 0.02f, 0.02f },
+			{ 0x00, 0x00, 0x00, 0xff },
+			{ 0xe0, 0xe0, 0xe0, 0xff },
+			"$150"
+		));
+
+		// Choice Option 4
+		blocks.emplace_back(TextBlock("Pacifico.ttf",
+			28,
+			{ 0.5f, -0.1f },
+			{ 0.3f, 0.1f },
+			{ 0.02f, 0.02f },
+			{ 0x00, 0x00, 0x00, 0xff },
+			{ 0xe0, 0xe0, 0xe0, 0xff },
+			"$150"
+		));
+
+		// Num Customer Left
+		blocks.emplace_back(TextBlock("Pacifico.ttf",
+			18,
+			{ 0.75f, 0.93f },
+			{ 0.2f, 0.08f },
+			{ 0.02f, 0.02f },
+			{ 0x00, 0x00, 0x00, 0xff },
+			{ 0xe0, 0xe0, 0xe0, 0xff },
+			"Customer Left: 3"
+		));
 	}
 
 	fsm = FSM();
@@ -54,7 +150,7 @@ bool PlayMode::handle_event(SDL_Event const &evt, glm::uvec2 const &window_size)
 void PlayMode::CheckMouseHover() {
 	for (auto& block : blocks) {
 		if (mouse_pos.x > block.anchor.x && mouse_pos.x < block.anchor.x + block.dims.x
-			&& mouse_pos.y > block.anchor.y && mouse_pos.y < block.anchor.y + block.dims.y) {
+			&& mouse_pos.y < block.anchor.y && mouse_pos.y > block.anchor.y - block.dims.y) {
 			selected_block_idx = static_cast<int>(&block - &blocks[0]);
 			return;
 		}

@@ -67,6 +67,7 @@ void FontSource::DrawText(const glm::uvec2& drawable_size, const std::string& te
 
 	float x_start = AnchorToScreen(anchor.x, drawable_size.x);
 	float y_start = AnchorToScreen(anchor.y, drawable_size.y);
+	y_start -= font_size;
 
 	float x_origin = x_start;
 	float y_origin = y_start;
@@ -87,6 +88,8 @@ void FontSource::DrawText(const glm::uvec2& drawable_size, const std::string& te
 			x_start = x_origin;
 			y_origin -= font_size;
 			y_start = y_origin;
+			if (text[i] == '\n' || text[i] == ' ')
+				continue;
 		}
 
 		FT_Error error = FT_Load_Char(ft_face, text[i], FT_LOAD_RENDER);

@@ -41,9 +41,9 @@ struct TextBlock
         assert(source != nullptr);
         shape_texture_program->SetBox(box, glm::vec4(
             anchor.x - margins.x,
-            anchor.y + dims.y + margins.y,
+            anchor.y + margins.y,
             anchor.x + dims.x + margins.x,
-            anchor.y - margins.y
+            anchor.y - dims.y - margins.y
         ), box_color);
     }
 };
