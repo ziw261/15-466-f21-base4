@@ -61,6 +61,10 @@ public:
     // 1 : action figure
     // 2 : card
     int item = -1;
+
+    // 0 : poor condition
+    // 1 : used condition
+    // 2 : perfect condition
     int item_level = -1;
     int offer_price = 0;
 
