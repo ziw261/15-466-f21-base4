@@ -198,15 +198,16 @@ void PlayMode::draw(glm::uvec2 const &drawable_size) {
 	for (auto& block : blocks) {
 		if (block.visible) {
 			if (selected_block_idx > -1 && &block - &blocks[0] == selected_block_idx) {
-				shape_texture_program->DrawBox(block.box);
+				//shape_texture_program->DrawBox(block.box);
+				shape_texture_program->SetBoxHighlight(block.box, block.box_size);
 				block.source->DrawText(drawable_size, block.text, block.anchor, block.dims, { 0xff, 0xff, 0xff, 0xff });
 			}
 			else {
-				shape_texture_program->DrawBox(block.box);
+				//shape_texture_program->DrawBox(block.box);
+				shape_texture_program->ResetBoxHighlight(block.box, block.box_size);
 				block.source->DrawText(drawable_size, block.text, block.anchor, block.dims, block.font_color);
 			}			
 		}
 	}
-
 	GL_ERRORS();
 }

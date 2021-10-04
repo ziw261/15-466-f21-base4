@@ -16,6 +16,13 @@
 	x;\
 	ASSERT(GLLogCall(#x, __FILE__, __LINE__))
 
+
+#define TEXT_DEFAULT_COLOR glm::u8vec4(0x00, 0x00, 0x00, 0xff)
+#define TEXT_HIGHLIGHT_COLOR glm::u8vec4(0xff)
+#define BOX_HIGHLIGHT_COLOR glm::u8vec4(0xde, 0xf2, 0x37, 0xff)
+#define BOX_DEFAULT_COLOR glm::u8vec4(0x77, 0x93, 0x7c, 0xff)
+
+
 static void GLClearError()
 {
 	while (glGetError() != GL_NO_ERROR);
@@ -147,7 +154,7 @@ void ShapeTextureProgram::SetBox(BoxDrawable& drawable, const glm::vec4& box, co
 		{{box[0], box[3]}, color, {0, 0}},
 		{{box[2], box[3]}, color, {1, 0}}
 	};
-
+	drawable.color = color;
 	GLCall(glBufferData(GL_ARRAY_BUFFER, 4 * sizeof(Vertex), static_cast<const void*>(vertices), GL_STATIC_DRAW));
 	drawable.vertex_array = shape_texture_program->GetVao(drawable.vertex_buffer);
 }
@@ -220,4 +227,20 @@ void ShapeTextureProgram::DrawFont(const Vertex* vertices, const GLuint texture_
 
 	GLCall(glDeleteBuffers(1, &vertex_buffer));
 	GLCall(glDeleteVertexArrays(1, &vertex_array));
+}
+
+void ShapeTextureProgram::SetBoxHighlight(BoxDrawable& drawable, const glm::vec4& box) const
+{
+	if (drawable.color != BOX_HIGHLIGHT_COLOR)
+		SetBox(drawable, box, BOX_HIGHLIGHT_COLOR);
+
+	DrawBox(drawable);
+}
+
+void ShapeTextureProgram::ResetBoxHighlight(BoxDrawable& drawable, const glm::vec4& box) const
+{
+	if (drawable.color != BOX_DEFAULT_COLOR)
+		SetBox(drawable, box, BOX_DEFAULT_COLOR);
+	
+	DrawBox(drawable);
 }

@@ -21,6 +21,7 @@ struct TextBlock
     std::string text;
     std::shared_ptr<FontSource> source;
     ShapeTextureProgram::BoxDrawable box;
+    glm::vec4 box_size;
 
     TextBlock() = default;
     TextBlock(std::string font_name_,
@@ -44,12 +45,13 @@ struct TextBlock
     {
         source = std::make_shared<FontSource>(data_path(font_name_), size);
         assert(source != nullptr);
-        shape_texture_program->SetBox(box, glm::vec4(
+        box_size = glm::vec4(
             anchor.x - margins.x,
             anchor.y + margins.y,
             anchor.x + dims.x + margins.x,
             anchor.y - dims.y - margins.y
-        ), box_color);
+        );
+        shape_texture_program->SetBox(box, box_size, box_color);
     }
 };
 
