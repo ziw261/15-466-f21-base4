@@ -8,7 +8,7 @@
 #include "gl_errors.hpp"
 
 #include <glm/gtc/type_ptr.hpp>
-
+#include <fstream>
 #include <random>
 
 GLuint hexapod_meshes_for_lit_color_texture_program = 0;
@@ -69,8 +69,18 @@ PlayMode::PlayMode() : scene(*hexapod_scene) {
 								{ 0.03f, 0.03f },
 								{ 0xff, 0xff, 0xff, 0xff },
 								{ 0x66, 0xff, 0x33, 0xff },
-								"Testinggabcdefghijklmnopq"
+								"Testinggabc.\ndefghijklmnopq"
 	);
+
+	// Json
+	std::ifstream file("test.json");
+	if (file.is_open()) {
+		file >> testJson;
+	}
+	else {
+		throw std::runtime_error("Unable to open json file");
+		abort();
+	}
 }
 
 PlayMode::~PlayMode() {
