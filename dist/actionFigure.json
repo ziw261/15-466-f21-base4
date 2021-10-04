@@ -1,0 +1,12 @@
+{
+    "description": {
+        "high" : "high bid desc for actionFigure",
+        "medium" : "medium bid desc for actionFigure",
+        "low" : "low bid desc for actionFigure"
+    }, 
+    "detail": {
+        "high" : "high detail for actionFigure",
+        "medium" : "medium detail for actionFigure",
+        "low" : "low detail for actionFigure"
+    }
+}

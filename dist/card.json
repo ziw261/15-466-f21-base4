@@ -1,0 +1,12 @@
+{
+    "description": {
+        "high" : "high bid desc for card",
+        "medium" : "medium bid desc for card",
+        "low" : "low bid desc for card"
+    }, 
+    "detail": {
+        "high" : "high detail for card",
+        "medium" : "medium detail for card",
+        "low" : "low detail for card"
+    }
+}

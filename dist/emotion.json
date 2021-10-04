@@ -1,0 +1,12 @@
+{
+    "emotion": {
+        "high" : [
+            "guilty emotion",
+            "dishonesty emotion"
+        ],
+        "low" : [
+            "firm emotion",
+            "natural emotion"
+        ]
+    }
+}

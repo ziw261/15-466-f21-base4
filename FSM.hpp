@@ -3,9 +3,12 @@
 #include <string>
 #include "FontSource.hpp"
 #include "data_path.hpp"
+#include "json.hpp"
 
 #include <glm/glm.hpp>
 
+// for convenience
+using json = nlohmann::json;
 struct TextBlock
 {
     bool visible = true;
@@ -49,20 +52,30 @@ class FSM {
 public:
     int cur_state = 0;
 
-    int item_level = 0;
     int true_price = 0;
     int expect_price = 0;
     int bid_price = 0;
+
     // -1 : not define
     // 0 : game console
     // 1 : action figure
     // 2 : card
-    int item = -1; 
+    int item = -1;
+    int item_level = -1;
     int offer_price = 0;
 
+    int min_price = 60;
+    int max_price = 1000;
+
     int total_gain = 0;
+    int target_gain = 10000;
     int total_customer = 10;
     int current_customer = 0;
+
+    json gameConsole;
+    json actionFigure;
+    json card;
+    json emotion;
 
 	// DFA
 	// {state_id : {action : next state}}
@@ -174,7 +187,7 @@ public:
      * 
      * @param texts  text boxs will be changed based on state
      */
-    void emotion(std::vector<TextBlock>& texts);
+    void emotionText(std::vector<TextBlock>& texts);
 
     /**
      * action for state 9
