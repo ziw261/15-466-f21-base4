@@ -256,7 +256,8 @@ void FSM::cardDetail(std::vector<TextBlock>& texts){
  */
 void FSM::emotionText(std::vector<TextBlock>& texts){
     int priceDiff = bid_price - expect_price;
-    int maxDiff = true_price * 1.2 * 1.6 - true_price * 0.8;
+    int maxDiff = true_price * (120 / 100) * (160 / 100) 
+                    - true_price * (80 / 100);
 
     std::string descText = "";
     if (priceDiff > maxDiff / 2) 
