@@ -42,6 +42,22 @@ FSM::FSM() {
 		throw std::runtime_error("Unable to open json file");
 		abort();
 	}
+
+    // callist.push_back(&FSM::init);
+    // callist.push_back(&FSM::clearAndRand);
+    // callist.push_back(&FSM::gcDesc);
+    // callist.push_back(&FSM::afDesc);
+    // callist.push_back(&FSM::cardDesc);
+    // callist.push_back(&FSM::gcDetail);
+    // callist.push_back(&FSM::afDetail);
+    // callist.push_back(&FSM::cardDetail);
+    // callist.push_back(&FSM::emotionText);
+    // callist.push_back(&FSM::offerPrice);
+    // callist.push_back(&FSM::secondBid);
+    // callist.push_back(&FSM::deal);
+    // callist.push_back(&FSM::summary);
+    // callist.push_back(&FSM::win);
+    // callist.push_back(&FSM::lose);
 }
 
 FSM::~FSM() {}
@@ -49,10 +65,121 @@ FSM::~FSM() {}
 /**
  * transfer state based on action
  * 
- * @param action action 0 - 5
+ * @param action action -1 - 5
  */
 void FSM::transferState(int action){
+    switch(cur_state) {
+        case 0: {
+            if (action == -3)
+                cur_state = DFA[cur_state]["start"];
+            else {
+                throw std::runtime_error("invalid operation in state " 
+                                            + std::to_string(cur_state));
+		        abort();
+            }
+            break;
+        }
+        case 2: case 3: case 4: {
+            if (action == 1)
+                cur_state = DFA[cur_state]["detail"];
+            else if (action == 2)
+                cur_state = DFA[cur_state]["emotion"];
+            else if (action == 3)
+                cur_state = DFA[cur_state]["offer"];
+            else {
+                throw std::runtime_error("invalid operation in state " 
+                                            + std::to_string(cur_state));
+		        abort();
+            }
+            break;
+        }
+        case 5: case 6: case 7: {
+            if (action == 2) {
+                cur_state = DFA[cur_state]["back"];
+            }
+            else {
+                throw std::runtime_error("invalid operation in state " 
+                                            + std::to_string(cur_state));
+		        abort();
+            }
+            break;
+        }   
+        case 8: {
+            if (action == 2) {
+                if (item == 0)
+                    cur_state = DFA[cur_state]["gc"];
+                else if (item == 1)
+                    cur_state = DFA[cur_state]["af"];
+                else if (item == 2)
+                    cur_state = DFA[cur_state]["card"];
+            }
+            else {
+                throw std::runtime_error("invalid operation in state " 
+                                            + std::to_string(cur_state));
+		        abort();
+            }
+            break;
+        }
+        case 9: {
+            double price = bid_price;
+            if (action == 1)
+                price *= 0.8;
+            else if (action == 2)
+                price *= 0.6;
+            else if (action == 3)
+                price *= 0.4;
+            else if (action == 4)
+                price *= 0.2;
+            else {
+                throw std::runtime_error("invalid operation in state " 
+                                            + std::to_string(cur_state));
+		        abort();
+            }
 
+            if ((int)price >= expect_price)
+                cur_state = DFA[cur_state]["over"];
+            else
+                cur_state = DFA[cur_state]["below"];
+            break;
+        }
+        case 10: {
+            if (action == 1)
+                cur_state = DFA[cur_state]["accept"];
+            else if (action == 2)
+                cur_state = DFA[cur_state]["reject"];
+            else {
+                throw std::runtime_error("invalid operation in state " 
+                                            + std::to_string(cur_state));
+		        abort();
+            }
+            break;
+        }
+        case 11: {
+            if (action == -3)
+                cur_state = DFA[cur_state]["next"];
+            else {
+                throw std::runtime_error("invalid operation in state " 
+                                            + std::to_string(cur_state));
+		        abort();
+            }
+            break;
+        }
+        case 13: case 14: {
+            if (action == -3)
+                cur_state = DFA[cur_state]["resume"];
+            else {
+                throw std::runtime_error("invalid operation in state " 
+                                            + std::to_string(cur_state));
+		        abort();
+            }
+            break;
+        }
+        default : {
+            throw std::runtime_error("unhandled state: " 
+                                            + std::to_string(cur_state));
+		    abort();
+        }
+    }
 }
 
 /**
@@ -61,7 +188,73 @@ void FSM::transferState(int action){
  * @param texts  text boxs will be changed based on state
  */
 void FSM::executeState(std::vector<TextBlock>& texts){
-
+    switch(cur_state) {
+        case 0: {
+            this->init(texts);
+            break;
+        }
+        case 1: {
+            this->clearAndRand(texts);
+            break;
+        }
+        case 2: {
+            this->gcDesc(texts);
+            break;
+        }
+        case 3: {
+            this->afDesc(texts);
+            break;
+        }
+        case 4: {
+            this->cardDesc(texts);
+            break;
+        }
+        case 5: {
+            this->gcDetail(texts);
+            break;
+        }
+        case 6: {
+            this->afDetail(texts);
+            break;
+        }
+        case 7: {
+            this->cardDetail(texts);
+            break;
+        }   
+        case 8: {
+            this->emotionText(texts);
+            break;
+        }
+        case 9: {
+            this->offerPrice(texts);
+            break;
+        }
+        case 10: {
+            this->secondBid(texts);
+            break;
+        }
+        case 11: {
+            this->deal(texts);
+            break;
+        }
+        case 12: {
+            this->summary(texts);
+            break;
+        }
+        case 13: {
+            this->win(texts);
+            break;
+        }
+        case 14: {
+            this->lose(texts);
+            break;
+        }
+        default : {
+            throw std::runtime_error("unhandled state: " 
+                                            + std::to_string(cur_state));
+		    abort();
+        }
+    }
 }
 
 /**
@@ -93,6 +286,20 @@ void FSM::clearAndRand(std::vector<TextBlock>& texts){
     
     // bid price is the 120 - 160% of expect price
 	bid_price = (120 + rand() % 40) * expect_price / 100;
+
+    std::cout << "item: " << item << std::endl;
+    std::cout << "item_level: " << item_level << std::endl;
+    std::cout << "true_price: " << true_price << std::endl;
+    std::cout << "expect_price: " << expect_price << std::endl;
+    std::cout << "bid_price: " << bid_price << std::endl;
+
+    // internal state transfer
+    if (item == 0)
+        cur_state = DFA[cur_state]["gc"];
+    else if (item == 1)
+        cur_state = DFA[cur_state]["af"];
+    else if (item == 2)
+        cur_state = DFA[cur_state]["card"];
 }
 
 /**
@@ -351,12 +558,14 @@ void FSM::secondBid(std::vector<TextBlock>& texts){
  * @param texts  text boxs will be changed based on state
  */
 void FSM::deal(std::vector<TextBlock>& texts){
+    texts[0].text = "Next";
     texts[1].text = "The deal has been made! Congrats on getting a new ";
 
     if (item == 0) texts[1].text += "game console.";
     if (item == 1) texts[1].text += "action figure.";
     if (item == 2) texts[1].text += "card.";
 
+    texts[0].visible = true;
     texts[1].visible = true;
 }
 
@@ -380,6 +589,13 @@ void FSM::summary(std::vector<TextBlock>& texts){
         texts[1].text += "you neither lose nor gain.";
 
     texts[1].visible = true;
+
+    if (total_gain >= target_gain)
+        cur_state = DFA[cur_state]["win"];
+    else if (total_gain <= -target_gain || current_customer >= total_customer)
+        cur_state = DFA[cur_state]["lose"];
+    else
+        cur_state = DFA[cur_state]["next"];
 }
 
 /**

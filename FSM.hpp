@@ -108,6 +108,8 @@ public:
         {{"resume", 0}},                                // state 14: Lose
 	};
 
+    // std::vector<void (FSM::*) ()> callist;
+
     FSM();
 	virtual ~FSM();
 
