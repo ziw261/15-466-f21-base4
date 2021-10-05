@@ -86,7 +86,7 @@ void FontSource::DrawText(const glm::uvec2& drawable_size, const std::string& te
 		// Horizontal Text Wrapping
 		if (x_start + x_advance - x_origin > x_span || text[i] == '\n') {
 			x_start = x_origin;
-			y_origin -= font_size;
+			y_origin -= font_size * 1.25f;
 			y_start = y_origin;
 			if (text[i] == '\n' || text[i] == ' ')
 				continue;
