@@ -19,9 +19,12 @@ How To Play:
 Sources: 
 
 Pipeline inspiration: https://github.com/GenBrg/MarryPrincess \
-Dimbo font: https://www.dafont.com/dimbo.font?l[]=10&l[]=1
+Dimbo font: https://www.dafont.com/dimbo.font?l[]=10&l[]=1 \
+Pacifico font: https://fonts.google.com/specimen/Pacifico
 
-Json loading: Stackoverflow: https://stackoverflow.com/a/39975809 and nlohmann's JSON Repository on GitHub: https://github.com/nlohmann/json
+Json loading: \
+Stackoverflow: https://stackoverflow.com/a/39975809 \
+nlohmann's JSON Repository on GitHub: https://github.com/nlohmann/json
 
 This game was built with [NEST](NEST.md).
 
