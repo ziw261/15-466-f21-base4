@@ -1,12 +1,12 @@
 {
     "description": {
-        "high" : "24k gold ps5",
-        "medium" : "kfc gaming console",
-        "low" : "NS switch with 4k screen"
+        "high": "Shiny shiny! This is a 24k gold PlayStation5 proudly procuded by British company Truly Exquisite. The gold cover looks amazing.\nNow only price for:",
+        "medium": "Introducing.... The KFCONSOLE developed by KFC! Forged from the fires of the KFC ovens and built by Cooler Master from the ground up. This power house can run the latest titles in stunning 4k, 240fps.\nNow only price for:",
+        "low": "It is a brand-new Nintendo Switch with 4K OLED screen. Hmm... I thought Nintendo just said there won't be any 4K resolution switch in the future? Is is a lie or a prototype?\nNow only price for:"
     }, 
     "detail": {
-        "high" : "high detail for game console",
-        "medium" : "medium detail for game console",
-        "low" : "low detail for game console"
+        "high" : "It is a limited edition and IS a real piece!! A must-collect!",
+        "medium" : "The console looks intact. Games also runs smoothly.",
+        "low" : "Hmm... The console looks broken and dusty. The condition looks terrible."
     }
 }
