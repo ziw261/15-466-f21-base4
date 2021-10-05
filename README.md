@@ -14,7 +14,7 @@ Screen Shot:
 
 How To Play:
 
-(TODO: describe the controls and (if needed) goals/strategy.)
+Use mouse to click buttons to make decision. You can talk to 20 customers max. And your goal is to get $300 in profit.
 
 Sources: 
 
