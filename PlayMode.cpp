@@ -27,7 +27,7 @@ PlayMode::PlayMode() {
 		));
 
 		// Customer Description
-		blocks.emplace_back(TextBlock("Pacifico.ttf",
+		blocks.emplace_back(TextBlock("Dimbo.ttf",
 			true, false,
 			24,
 			{ -0.77f, -0.36f },
@@ -63,7 +63,7 @@ PlayMode::PlayMode() {
 		));
 
 		// Choice Option 0
-		blocks.emplace_back(TextBlock("Pacifico.ttf",
+		blocks.emplace_back(TextBlock("Dimbo.ttf",
 			true, true,
 			28,
 			{ 0.5f, 0.7f },
@@ -75,7 +75,7 @@ PlayMode::PlayMode() {
 		));
 
 		// Choice Option 1
-		blocks.emplace_back(TextBlock("Pacifico.ttf",
+		blocks.emplace_back(TextBlock("Dimbo.ttf",
 			true, true,
 			28,
 			{ 0.5f, 0.5f },
@@ -87,7 +87,7 @@ PlayMode::PlayMode() {
 		));
 
 		// Choice Option 2
-		blocks.emplace_back(TextBlock("Pacifico.ttf",
+		blocks.emplace_back(TextBlock("Dimbo.ttf",
 			true, true,
 			28,
 			{ 0.5f, 0.3f },
@@ -99,7 +99,7 @@ PlayMode::PlayMode() {
 		));
 
 		// Choice Option 3
-		blocks.emplace_back(TextBlock("Pacifico.ttf",
+		blocks.emplace_back(TextBlock("Dimbo.ttf",
 			true, true,
 			28,
 			{ 0.5f, 0.1f },
@@ -111,7 +111,7 @@ PlayMode::PlayMode() {
 		));
 
 		// Choice Option 4
-		blocks.emplace_back(TextBlock("Pacifico.ttf",
+		blocks.emplace_back(TextBlock("Dimbo.ttf",
 			true, true,
 			28,
 			{ 0.5f, -0.1f },
@@ -123,7 +123,7 @@ PlayMode::PlayMode() {
 		));
 
 		// Num Customer Left
-		blocks.emplace_back(TextBlock("Pacifico.ttf",
+		blocks.emplace_back(TextBlock("Dimbo.ttf",
 			true, false,
 			18,
 			{ 0.75f, 0.93f },
