@@ -14,7 +14,9 @@ How To Play:
 
 (TODO: describe the controls and (if needed) goals/strategy.)
 
-Sources: (TODO: list a source URL for any assets you did not create yourself. Make sure you have a license for the asset.)
+Sources: 
+
+Dimbo font: https://www.dafont.com/dimbo.font?l[]=10&l[]=1
 
 Json loading: Stackoverflow: https://stackoverflow.com/a/39975809 and nlohmann's JSON Repository on GitHub: https://github.com/nlohmann/json
 
