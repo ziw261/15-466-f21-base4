@@ -63,6 +63,9 @@ public:
     int expect_price = 0;
     int bid_price = 0;
 
+    int total_gain = 0;
+    int current_customer = 1;
+
     // -1 : not define
     // 0 : game console
     // 1 : action figure
@@ -76,12 +79,10 @@ public:
     int offer_price = 0;
 
     int min_price = 60;
-    int max_price = 1000;
+    int max_price = 600;
 
-    int total_gain = 0;
-    int target_gain = 1000;
-    int total_customer = 2;
-    int current_customer = 0;
+    int target_gain = 300;
+    int total_customer = 20;
 
     json gameConsole;
     json actionFigure;
@@ -101,15 +102,14 @@ public:
         {{"back", 4}},                                  // state 7: card detail
         {{"gc", 2}, {"af", 3}, {"card", 4}},            // state 8: view emotion
         {{"over", 11}, {"below", 10}},                  // state 9: offer price
-        {{"accept", 11}, {"reject", 12}},               // state 10: NPC second Bid
+        {{"accept", 11}, {"reject", 15}},               // state 10: NPC second Bid
         {{"next", 12}},                                 // state 11: Deal
         {{"next", 1}, {"win", 13}, {"lose", 14}},       // state 12: Summary
         {{"resume", 0}},                                // state 13: Win
         {{"resume", 0}},                                // state 14: Lose
+        {{"next", 12}}                                  // state 15: Reject offer
 	};
-
-    // std::vector<void (FSM::*) ()> callist;
-
+    
     FSM();
 	virtual ~FSM();
 
@@ -249,6 +249,14 @@ public:
      * @param texts  text boxs will be changed based on state
      */
     void lose(std::vector<TextBlock>& texts);
+
+    /**
+     * action for state 15
+     * reject offer state
+     * 
+     * @param texts  text boxs will be changed based on state
+     */
+    void reject(std::vector<TextBlock>& texts);
 
 
     /**
