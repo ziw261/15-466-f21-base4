@@ -334,7 +334,7 @@ void FSM::gcDesc(std::vector<TextBlock>& texts){
     // use the middle three text blocks
     // show action
     texts[5].text = "View Item Detail";
-    texts[6].text = "View Customer Emotion";
+    texts[6].text = "View Emotion";
     texts[7].text = "Offer Price";
 
     texts[1].visible = true;
