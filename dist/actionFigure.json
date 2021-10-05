@@ -1,12 +1,12 @@
 {
-    "description": {
-        "high" : "high bid desc for actionFigure",
-        "medium" : "medium bid desc for actionFigure",
-        "low" : "low bid desc for actionFigure"
-    }, 
+  "description": {
+    "high": "This is the Fate Stay Night Gsc Saber Alter Huke Metal Gear Ver.\n It is very limited and famous.\n Everybody loves the illustrator huke.\n",
+    "medium": "This is the Lady Maria of The Astral Clocktower from Bloodborne.\n It is made by Max Factory.\n It's a decent artwork.\n",
+    "low": "This is probably an Iron man. Because there is no creature looks near to this in this world.\n No idea who made this.\n"
+  }, 
     "detail": {
-        "high" : "high detail for actionFigure",
-        "medium" : "medium detail for actionFigure",
-        "low" : "low detail for actionFigure"
+        "high" : "The box condition is perfect. There are no scratches. A little dust exists between the clothes fold.",
+        "medium" : "There are no obvious damage from outside. The figure looks intact.",
+        "low" : "It's standing. No parts missing."
     }
 }
