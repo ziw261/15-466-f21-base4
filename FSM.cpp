@@ -124,7 +124,7 @@ void FSM::transferState(int action){
 		        abort();
             }
 
-            offer_price = price;
+            offer_price = (int)price;
 
             if ((int)price >= expect_price)
                 cur_state = DFA[cur_state]["over"];
