@@ -1,4 +1,4 @@
-# (TODO: your game's title)
+# Gamestop Simulator
 
 Author: Zi Wang, Wenlin Mao, Tianrun(Martin) Ke
 
