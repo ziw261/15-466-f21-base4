@@ -2,7 +2,7 @@
 
 Author: Zi Wang, Wenlin Mao, Tianrun(Martin) Ke
 
-Design: (TODO: In two sentences or fewer, describe what is new and interesting about your game.)
+Design: You are working at gamestop where people would come and sell cards, gaming consoles or action figures to you. Be cautious though because some people are lying. You need to find out the true value of these items and make profit for your store!
 
 Text Drawing: 
 
