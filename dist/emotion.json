@@ -1,12 +1,16 @@
 {
     "emotion": {
         "high" : [
-            "Guilt was written all over her face.",
-            "dishonesty emotion"
+            "Guilt was written all over his face.",
+            "He avoids eye contact with you.",
+            "He blinks slowly.",
+            "He appear to be more fidgety."
         ],
         "low" : [
-            "firm emotion",
-            "natural emotion"
+            "He has kept a firm lid on his emotions.",
+            "He kept a natrual expression on his face.",
+            "He blinks normally.",
+            "He looks straight to your eyes."
         ]
     }
 }
