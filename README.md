@@ -8,6 +8,14 @@ Text Drawing:
 
 The text drawing pipeline is like this. The InitializeGlyaphMap will create all the 2d textures for all the ascii code from 32 to 127. And then, whenever we want to change text, SetText will regenerate the glyph position and info. Then in the DrawText, it will iterate through all the characters and calculate the positions, find the already saved texture_id and let opengl does the drawing.
 
+Finite State Machine: 
+This game is implemented using the Finite State Machine with all text rendering tasks defined as a state and
+all player action defined as edges. Based on the state the player currently located,
+different action will lead to different outcomes. The game is purely based on randomization,
+thus the player is able to meet various condition and need to think how to overcome them.
+The state will render text accordingly based on the randomized generated item type, item level, true price, NPC expect price,
+and NPC bid price. Different combination will create different challenge for player to resolve.
+
 Screen Shot:
 
 ![Screen Shot](screenshot.png)
