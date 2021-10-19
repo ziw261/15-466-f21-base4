@@ -159,6 +159,7 @@ void ShapeTextureProgram::SetBox(BoxDrawable& drawable, const glm::vec4& box, co
 	drawable.vertex_array = shape_texture_program->GetVao(drawable.vertex_buffer);
 }
 
+// Code from https://github.com/GenBrg/MarryPrincess/blob/master/Texture2DProgram.cpp
 void ShapeTextureProgram::DrawBox(const BoxDrawable& drawable) const
 {
 	GLCall(glUseProgram(program));

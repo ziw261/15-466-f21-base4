@@ -25,6 +25,7 @@ struct ShapeTextureProgram
 		glm::vec2 TexCoord;
 	};
 
+	// Code from https://github.com/GenBrg/MarryPrincess/blob/master/Texture2DProgram.hpp
 	struct BoxDrawable
 	{
 		GLuint vertex_array{ 0 };
